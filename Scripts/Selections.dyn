@@ -234,7 +234,7 @@
     {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
       "NodeType": "BooleanInputNode",
-      "InputValue": true,
+      "InputValue": false,
       "Id": "3f1d86a8235a4ab3aab3a0cce6f3186b",
       "Inputs": [],
       "Outputs": [
@@ -665,8 +665,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 374.916083076964,
-        "Y": -1477.1259757051691
+        "X": 474.47687115886697,
+        "Y": -1486.0521153263053
       },
       {
         "ShowGeometry": true,
@@ -675,8 +675,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 165.75982231432897,
-        "Y": -1461.8914463797885
+        "X": 328.49021386888757,
+        "Y": -1484.5501084949801
       },
       {
         "ShowGeometry": true,
@@ -685,8 +685,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 657.29132307216469,
-        "Y": -1535.0306435823584
+        "X": 627.24856880426262,
+        "Y": -1489.5605290147228
       },
       {
         "ShowGeometry": true,
@@ -798,19 +798,19 @@
           "3f1d86a8235a4ab3aab3a0cce6f3186b",
           "c7788432bcc04cea9e24bb4ede0aa5af"
         ],
-        "Left": 155.75982231432897,
-        "Top": -1588.0306435823584,
-        "Width": 688.53150075783572,
-        "Height": 214.90466787718924,
+        "Left": 318.49021386888757,
+        "Top": -1542.5605290147228,
+        "Width": 495.75835493537505,
+        "Height": 209.0,
         "FontSize": 36.0,
-        "InitialTop": -1535.0306435823584,
+        "InitialTop": -1489.5605290147228,
         "InitialHeight": 218.1391972025699,
         "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       }
     ],
-    "X": 492.15785392359021,
-    "Y": 1612.4980763392196,
-    "Zoom": 0.91306114920992854
+    "X": -55.502610577394478,
+    "Y": 1433.1925468713437,
+    "Zoom": 0.73724363621886724
   }
 }

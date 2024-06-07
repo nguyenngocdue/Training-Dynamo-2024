@@ -1,0 +1,390 @@
+{
+  "Uuid": "2b558600-abc7-4178-b8f7-215be56370bc",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "DesignScript",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "f = open(r\"U:\\17_TraningAdvanceDynamo\\2_WORKING\\Tool\\Dynamo\\Traning-Dynamo-2024\\DesignScript.py\", \"r\")\r\n\r\nOUT = f.read() ",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "e73aa4d753e04a83b7df3943567b947f",
+      "Inputs": [
+        {
+          "Id": "96448ef17ad34a99b22a7e8f1294cab8",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "34899df3be1441d29e2952aa91ec5962",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "3f1d86a8235a4ab3aab3a0cce6f3186b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "44393f5356d04cb487b059364734ba87",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonStringNode, PythonNodeModels",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "NodeType": "ExtensionNode",
+      "Id": "c7788432bcc04cea9e24bb4ede0aa5af",
+      "Inputs": [
+        {
+          "Id": "ac370facc88d44cc99ffe33b027d0012",
+          "Name": "script",
+          "Description": "Python script to run.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "135f3bc1deef4cea85bc77dfbbcf4cf4",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3fd3ce0e17e9446ea98c19b22ea1a8bd",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9249185da5714b039dd85b18d7dd02f6",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs a Python script from a string."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double,double",
+      "Id": "c6e21d4f511241d699b3bbbdc8dac678",
+      "Inputs": [
+        {
+          "Id": "f839e8037aba4b9a8d9356e67858876c",
+          "Name": "x",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a5ae6243d1de460b8b671bd3d7ed8e0b",
+          "Name": "y",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5f688c02beda4169849caefe3d3b51e2",
+          "Name": "z",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7cfd3e8740c844ff9d71642284e8b742",
+          "Name": "Point",
+          "Description": "Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Form a Point given 3 cartesian coordinates\n\nPoint.ByCoordinates (x: double = 0, y: double = 0, z: double = 0): Point"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 100.0,
+      "MinimumValue": 0.0,
+      "StepValue": 0.1,
+      "InputValue": 3.4000000000000004,
+      "Id": "ac69ca0bff7e4f5e91f007ea2b42fc2a",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "cc2361724cde4de5a95800783061b9e4",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "Point.ByCoordinates(10,10,10);",
+      "Id": "940a3c0856c54cb9a2ed1b91e214684c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "70de912d4b734fcb8356892eedc6404b",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import clr\r\nimport System\r\nimport math \r\nfrom System.Collections.Generic import *\r\n\r\nclr.AddReference(\"ProtoGeometry\")\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n\r\n\r\n\r\n\r\n#Preparing input from dynamo to revit\r\nelement = UnwrapElement(IN[0])\r\n\r\n#Do some action in a Transaction\r\n#TransactionManager.Instance.EnsureInTransaction(doc)\r\n\"\"\"Now, You Can Code \"\"\"\r\npoints = []\r\nfor i in range(100):\r\n\tpoint = Point.ByCoordinates(i , 10, i + 10)\r\n\tpoints.append(point)\r\nOUT = points\r\n",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "8707ad28ade14fdea578b11d198b957f",
+      "Inputs": [
+        {
+          "Id": "4d1bf55720754afeb8dada8824eea294",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "97e2033d555242cf88cce397198188ee",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "34899df3be1441d29e2952aa91ec5962",
+      "End": "ac370facc88d44cc99ffe33b027d0012",
+      "Id": "c1594deef9604848b3a044eabeb1ddcc"
+    },
+    {
+      "Start": "44393f5356d04cb487b059364734ba87",
+      "End": "96448ef17ad34a99b22a7e8f1294cab8",
+      "Id": "1490f565c57846aaa2ba51c0e7271d48"
+    },
+    {
+      "Start": "cc2361724cde4de5a95800783061b9e4",
+      "End": "f839e8037aba4b9a8d9356e67858876c",
+      "Id": "5a9bd980ddc94c3c902ca219d64b4ce6"
+    },
+    {
+      "Start": "cc2361724cde4de5a95800783061b9e4",
+      "End": "a5ae6243d1de460b8b671bd3d7ed8e0b",
+      "Id": "0f7a6d27c8654c3195a55ff58b9cbc71"
+    },
+    {
+      "Start": "cc2361724cde4de5a95800783061b9e4",
+      "End": "5f688c02beda4169849caefe3d3b51e2",
+      "Id": "628e8032633441498843cb1139070caf"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.10.1.3976",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 43.634494781494141,
+      "EyeY": 62.434555053710938,
+      "EyeZ": 138.96551513671875,
+      "LookX": -48.634494781494141,
+      "LookY": -51.434555053710938,
+      "LookZ": -146.96551513671875,
+      "UpX": -0.032840516418218613,
+      "UpY": 0.9945218563079834,
+      "UpZ": -0.099236726760864258
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "e73aa4d753e04a83b7df3943567b947f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 374.916083076964,
+        "Y": -1477.1259757051691
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "3f1d86a8235a4ab3aab3a0cce6f3186b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 165.75982231432897,
+        "Y": -1461.8914463797885
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script From String",
+        "Id": "c7788432bcc04cea9e24bb4ede0aa5af",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 657.29132307216469,
+        "Y": -1535.0306435823584
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Point.ByCoordinates",
+        "Id": "c6e21d4f511241d699b3bbbdc8dac678",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 846.15093862447236,
+        "Y": -1366.0168491778061
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
+        "Id": "ac69ca0bff7e4f5e91f007ea2b42fc2a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 459.24978651988465,
+        "Y": -1355.3247134014807
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "940a3c0856c54cb9a2ed1b91e214684c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 219.28928273610302,
+        "Y": -1239.0000000000002
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "8707ad28ade14fdea578b11d198b957f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 96.185939058506619,
+        "Y": -865.30344889968342
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "0339651c2c8c4fb79849de8b6204236c",
+        "Title": "Design Script",
+        "Nodes": [
+          "e73aa4d753e04a83b7df3943567b947f",
+          "3f1d86a8235a4ab3aab3a0cce6f3186b",
+          "c7788432bcc04cea9e24bb4ede0aa5af"
+        ],
+        "Left": 155.75982231432897,
+        "Top": -1588.0306435823584,
+        "Width": 688.53150075783572,
+        "Height": 214.90466787718924,
+        "FontSize": 36.0,
+        "InitialTop": -1535.0306435823584,
+        "InitialHeight": 218.1391972025699,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": 603.42961008064185,
+    "Y": 1198.2092941718429,
+    "Zoom": 0.84057746377412412
+  }
+}
