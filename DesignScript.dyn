@@ -986,6 +986,58 @@
       ],
       "Replication": "Disabled",
       "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import clr\r\nimport System\r\nimport math \r\nfrom System.Collections.Generic import *\r\n\r\nclr.AddReference(\"ProtoGeometry\")\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference('RevitAPI')\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import*\r\nfrom  Autodesk.Revit.UI.Selection import*\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nimport clr\r\nclr.AddReference('DSCoreNodes')\r\nfrom DSCore import *\r\n\r\n\r\n\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\nclass SelectionFilter(ISelectionFilter):\r\n\tdef __init__(self, ctgName1 , ctgName2):\r\n\t\tself.ctgName1 = ctgName1\r\n\t\tself.ctgName2 = ctgName2\r\n\r\n\tdef AllowElement(self, element):\r\n\t\tif element.Category.Name == self.ctgName1 or element.Category.Name == self.ctgName2:\r\n\t\t\treturn True\r\n\t\telse:\r\n\t\t\treturn False\r\n\tdef AllowReference(ref, xyZ):\r\n\t\treturn False\r\n\r\n\r\nele = SelectionFilter(\"Grids\", \"Structural Columns\")\r\nelSelectAll = uidoc.Selection.PickElementsByRectangle(ele,\"Selects\")\r\nOUT = elSelectAll\r\n\r\ngrids = []\r\ncolumn = []\r\nfor i in elSelectAll:\r\n    if i.Category.Name == \"Structural Columns\": column.append(i)\r\n    if i.Category.Name == \"Grids\": grids.append(i)\r\nOUT =  column, grids",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "4d740eff030942d0ada0d61c860c3891",
+      "Inputs": [
+        {
+          "Id": "8a9de29fb85341428ea30c4ad71922e0",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d4d8ba05dcd04224914659a3e31c4d3d",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": false,
+      "Id": "ac51cc439abc43f8b480d2a8dcaca5f1",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "263d57866faa4f1c8ec97f3bade103ab",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
     }
   ],
   "Connectors": [
@@ -1148,6 +1200,11 @@
       "Start": "3f5d298c86134215b60ca0e958e1e364",
       "End": "2cfff1b5ffc648c29222688e4f054eea",
       "Id": "8db6a00b9bb04d8bb194268a25342aae"
+    },
+    {
+      "Start": "263d57866faa4f1c8ec97f3bade103ab",
+      "End": "8a9de29fb85341428ea30c4ad71922e0",
+      "Id": "dc2cf09f8fe24a92b194a28ba2e798c7"
     }
   ],
   "Dependencies": [],
@@ -1464,6 +1521,26 @@
         "Excluded": false,
         "X": 1590.7917494865808,
         "Y": -472.23900266406611
+      },
+      {
+        "Id": "4d740eff030942d0ada0d61c860c3891",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": -818.05413920110755,
+        "Y": -750.322015190537
+      },
+      {
+        "Id": "ac51cc439abc43f8b480d2a8dcaca5f1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Boolean",
+        "ShowGeometry": true,
+        "Excluded": true,
+        "X": -1047.1880112389101,
+        "Y": -762.5769717418525
       }
     ],
     "Annotations": [
@@ -1486,8 +1563,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 22.346741801712824,
-    "Y": 675.10938988593682,
-    "Zoom": 0.824666038659535
+    "X": 1723.1595219310809,
+    "Y": 1218.8012735346738,
+    "Zoom": 1.4296983196720152
   }
 }
