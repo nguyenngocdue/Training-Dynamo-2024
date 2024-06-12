@@ -299,6 +299,95 @@
       ],
       "Replication": "Disabled",
       "Description": "Runs a Python script from a string."
+    },
+    {
+      "ConcreteType": "Dynamo.Nodes.DSModelElementsSelection, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "d541e8f5-36b8-4ae7-b8d1-00070a4f28e5-0389b160",
+        "d541e8f5-36b8-4ae7-b8d1-00070a4f28e5-0389b18b",
+        "d541e8f5-36b8-4ae7-b8d1-00070a4f28e5-0389b2aa",
+        "d541e8f5-36b8-4ae7-b8d1-00070a4f28e5-0389b32e"
+      ],
+      "Id": "8c03515422fa43b6baebab81cb892ffe",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f3c816ff34c243a3ae9c10faccfd2516",
+          "Name": "Elements",
+          "Description": "The selected elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 1.0,
+      "MinimumValue": 0.0,
+      "StepValue": 0.1,
+      "InputValue": 0.2,
+      "Id": "235ebce998b044d3a7f082c4aece3b80",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9b0bded9c38c4cb982fc7ef65b7d5f7d",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "\"\"\"Copyright(c) 2019 by: duengocnguyen@gmail.com\"\"\"\r\n'https://www.youtube.com/channel/UCt2JhCDDFxpYho575WTMZ4g'\r\n\"\"\"________________Welcome to BIM3DM-DYNAMO API___________________\"\"\"\r\nimport clr \r\nimport sys\r\nimport math \r\nfrom System.Collections.Generic import *\r\n\r\nclr.AddReference(\"ProtoGeometry\")\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference('RevitAPI')\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\n\r\n\r\n#Preparing input from dynamo to revit\r\nelement = UnwrapElement(IN[0])\r\n\r\ndef getDBLineByLines(elements):\r\n    re = []\r\n    for i in elements:\r\n        crv = i.GeometryCurve\r\n        re.append(crv)\r\n    return re\r\n\r\nfactor = IN[1]\r\ndbLines = getDBLineByLines(element)\r\n\r\npoints = [dbLine.Evaluate(factor, True).ToPoint() for dbLine in dbLines]\r\n\r\nOUT = points",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "e0f5976608534489a77a56bf43166e4a",
+      "Inputs": [
+        {
+          "Id": "4e9b5509dbd44d94bd5d3497511a179b",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6714bb649f8144dda6e5fcfa6911cbbd",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2b40045612394ca7ad59f65088d35118",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
     }
   ],
   "Connectors": [
@@ -311,6 +400,16 @@
       "Start": "44393f5356d04cb487b059364734ba87",
       "End": "96448ef17ad34a99b22a7e8f1294cab8",
       "Id": "1490f565c57846aaa2ba51c0e7271d48"
+    },
+    {
+      "Start": "f3c816ff34c243a3ae9c10faccfd2516",
+      "End": "4e9b5509dbd44d94bd5d3497511a179b",
+      "Id": "1949fab2dd6c4db988309f10710b3517"
+    },
+    {
+      "Start": "9b0bded9c38c4cb982fc7ef65b7d5f7d",
+      "End": "6714bb649f8144dda6e5fcfa6911cbbd",
+      "Id": "1c4453ba466748018bfd6b3ac2a38434"
     }
   ],
   "Dependencies": [
@@ -352,84 +451,114 @@
     },
     "NodeViews": [
       {
-        "ShowGeometry": true,
-        "Name": "Python Script",
         "Id": "5a592c25532b4564b67c75c5961a4578",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
         "Excluded": false,
         "X": 243.02701663791083,
         "Y": 137.22649473668736
       },
       {
-        "ShowGeometry": true,
-        "Name": "Python Script From String",
         "Id": "5c0768d9ff474de19c4e4c0de6c266b0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Name": "Python Script From String",
+        "ShowGeometry": true,
         "Excluded": false,
         "X": 613.83332631188318,
         "Y": 199.79870850192745
       },
       {
-        "ShowGeometry": true,
-        "Name": "Color.ByARGB",
         "Id": "4d4eff623b3d4bcb8eb1f46463e913be",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Name": "Color.ByARGB",
+        "ShowGeometry": true,
         "Excluded": false,
         "X": -51.371174511884078,
         "Y": 174.73149675588502
       },
       {
-        "ShowGeometry": true,
-        "Name": "ConditionalFlattenArray",
         "Id": "71812364d52f43648f8995fe4c37b3dd",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Name": "ConditionalFlattenArray",
+        "ShowGeometry": true,
         "Excluded": false,
         "X": -134.154124104498,
         "Y": -19.117753784397053
       },
       {
-        "ShowGeometry": true,
-        "Name": "Code",
         "Id": "d449d7f8d2884ab3af0e52c73663db14",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Name": "Code",
+        "ShowGeometry": true,
         "Excluded": false,
         "X": 666.58008103765314,
         "Y": 394.891474531682
       },
       {
-        "ShowGeometry": true,
-        "Name": "Python Script",
         "Id": "e73aa4d753e04a83b7df3943567b947f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
         "Excluded": false,
-        "X": 767.16323102062756,
-        "Y": -1099.7117031039129
+        "X": 921.99798611156746,
+        "Y": -910.355358253399
       },
       {
-        "ShowGeometry": true,
-        "Name": "Boolean",
         "Id": "3f1d86a8235a4ab3aab3a0cce6f3186b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Name": "Boolean",
+        "ShowGeometry": true,
         "Excluded": false,
-        "X": 558.00697025799252,
-        "Y": -1084.4771737785322
+        "X": 712.84172534893241,
+        "Y": -895.12082892801834
       },
       {
-        "ShowGeometry": true,
-        "Name": "Python Script From String",
         "Id": "c7788432bcc04cea9e24bb4ede0aa5af",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Name": "Python Script From String",
+        "ShowGeometry": true,
         "Excluded": false,
-        "X": 1049.5384710158282,
-        "Y": -1157.6163709811021
+        "X": 1204.3732261067682,
+        "Y": -968.26002613058824
+      },
+      {
+        "Id": "8c03515422fa43b6baebab81cb892ffe",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Select Model Elements",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 727.398942734726,
+        "Y": -1542.7530349448314
+      },
+      {
+        "Id": "235ebce998b044d3a7f082c4aece3b80",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Number Slider",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 677.24539482396983,
+        "Y": -1267.591239362908
+      },
+      {
+        "Id": "e0f5976608534489a77a56bf43166e4a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 1167.4527431037407,
+        "Y": -1462.4021992667108
       }
     ],
     "Annotations": [
@@ -441,19 +570,19 @@
           "3f1d86a8235a4ab3aab3a0cce6f3186b",
           "c7788432bcc04cea9e24bb4ede0aa5af"
         ],
-        "Left": 548.00697025799252,
-        "Top": -1210.6163709811021,
-        "Width": 688.53150075783572,
+        "Left": 702.84172534893241,
+        "Top": -1021.2600261305882,
+        "Width": 688.53150075783583,
         "Height": 214.90466787718924,
         "FontSize": 36.0,
-        "InitialTop": -1157.6163709811021,
-        "InitialHeight": 191.90466787718924,
+        "InitialTop": -968.26002613058824,
+        "InitialHeight": 218.1391972025699,
         "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       }
     ],
-    "X": -762.60263952214177,
-    "Y": 1959.6745503829063,
-    "Zoom": 1.436794101001865
+    "X": 21.65113204843243,
+    "Y": 928.77415013422137,
+    "Zoom": 0.39331723175312605
   }
 }
