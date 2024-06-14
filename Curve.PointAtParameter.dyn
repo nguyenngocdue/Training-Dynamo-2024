@@ -16,7 +16,7 @@
       "MaximumValue": 1.0,
       "MinimumValue": 0.0,
       "StepValue": 0.1,
-      "InputValue": 0.2,
+      "InputValue": 0.8,
       "Id": "e1d77bfb049644dc9a74561145eb0adf",
       "Inputs": [],
       "Outputs": [
@@ -168,8 +168,8 @@
       }
     ],
     "Annotations": [],
-    "X": -21.465638186099568,
-    "Y": 136.30768761863766,
+    "X": -34.465638186099568,
+    "Y": 142.30768761863766,
     "Zoom": 0.91006380393143915
   }
 }
