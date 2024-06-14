@@ -4,7 +4,12 @@
   "Description": null,
   "Name": "DesignScript",
   "ElementResolver": {
-    "ResolutionMap": {}
+    "ResolutionMap": {
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
   },
   "Inputs": [],
   "Outputs": [],
@@ -388,6 +393,364 @@
       ],
       "Replication": "Disabled",
       "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "objects = ['a', 'b', 'c',500,600,501,'500', 'd', 'e', 'f']\r\n\r\nlstStr=  []\r\nfor obj in objects:\r\n    if isinstance(obj,int):\r\n        lstStr.append(obj)\r\nOUT = lstStr\r\n",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "ed60b1f858694117922f280779fea4cf",
+      "Inputs": [
+        {
+          "Id": "41a71ddd947641848982abe6f01bd93f",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6b0dfb5f44ea4bdab5753192deb6c593",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "objects = ['text_a-a-3000', 'text_b-4000', 'text_c-4000', 'text_d-8000']\r\nOUT = [num.split('-')[-1]  for num in objects]",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "829a0d8917d14968b71a84c06b00d773",
+      "Inputs": [
+        {
+          "Id": "a0e10fd05431440dbe47350ec918e8e4",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "aaf5c51e7c1d455d9b1cf585ed6ff848",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "Point.ByCoordinates(x+2.5,y,0);",
+      "Id": "89654a2c98ad4dd387cdc2cc661a35f5",
+      "Inputs": [
+        {
+          "Id": "265d6214b9064ccbb07e78354e468186",
+          "Name": "x",
+          "Description": "x",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1d47546eea5a4a7f802fe2214d68e6e5",
+          "Name": "y",
+          "Description": "y",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d13a52b89f8e4526977f0f4ada12e7ef",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "0..10;",
+      "Id": "a860fb0f2ebf4004acc69475725c14b4",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9ada420a45264f17821951546c55f2b9",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "\"\"\"Copyright(c) 2019 by: duengocnguyen@gmail.com\"\"\"\r\n'https://www.youtube.com/channel/UCt2JhCDDFxpYho575WTMZ4g'\r\n\"\"\"________________Welcome to BIM3DM-DYNAMO API___________________\"\"\"\r\nimport clr \r\nimport sys\r\nfrom System.Collections.Generic import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\n\r\ndef getPositivePointByX(elements):\r\n\tpoints = [point for point in elements if  point.X % 2 != 1 and point.X != 0]\r\n\treturn points\r\n\r\n#Preparing input from dynamo to revit\r\ninputs = UnwrapElement(IN[0])\r\n\r\n\r\nOUT = getPositivePointByX(inputs)",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "0460d8cd28e54e06b775238ed9d3b980",
+      "Inputs": [
+        {
+          "Id": "d91a0c83335b48e2885c6656088d3efa",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ac21ca865fdc43aa9e807afdb63b527a",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "\"\"\"Copyright(c) 2019 by: duengocnguyen@gmail.com\"\"\"\r\n'https://www.youtube.com/channel/UCt2JhCDDFxpYho575WTMZ4g'\r\n\"\"\"________________Welcome to BIM3DM-DYNAMO API___________________\"\"\"\r\nimport clr \r\nimport sys\r\nfrom System.Collections.Generic import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\n\r\ndef getPositivePointByX(objects):\r\n    result = []\r\n    for p in objects:\r\n        if p.X % 2 != 1:\r\n            result.append(p)\r\n    return result\r\n\r\ninput = IN[1] # tat cac diem ma can filter\r\npoints = getPositivePointByX(input)\r\nOUT = points",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "56d4f45f9b744631b79678ee9726ef77",
+      "Inputs": [
+        {
+          "Id": "d3605f953fd3437686db52cc085f409a",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8a6d53d333bb45519c4b82bf4a60fe7b",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "67ef1ff917304b25b2b7bd032703ae6a",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "\"\"\"Copyright(c) 2019 by: duengocnguyen@gmail.com\"\"\"\r\n'https://www.youtube.com/channel/UCt2JhCDDFxpYho575WTMZ4g'\r\n\"\"\"________________Welcome to BIM3DM-DYNAMO API___________________\"\"\"\r\nimport clr \r\nimport sys\r\nsys.path.append(r'U:\\17_TraningAdvanceDynamo\\2_WORKING\\Tool\\Dynamo\\Traning-Dynamo-2024')\r\nimport math \r\nfrom System.Collections.Generic import *\r\n\r\nfrom Utils import*\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\n#Preparing input from dynamo to revit\r\nelements = UnwrapElement(IN[0])\r\n\r\npoints = getPositivePointByX(elements)\r\n\r\n#OUT = points\r\nOUT = points",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "4ae4eb15d3774bf2ac8d98bab54cd713",
+      "Inputs": [
+        {
+          "Id": "dcb595701d8a4edda84d9fd13856ebcc",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "870ae2ec2ef04027858277de2cc8819c",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "10..20;",
+      "Id": "208ee788e80c493595f8dd222e39c985",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "049739b3109542af875a87429c99ca98",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "Point.ByCoordinates(0,0,z);",
+      "Id": "847cca8c7cc74ecc82bbd283dff53553",
+      "Inputs": [
+        {
+          "Id": "1a099a6aedc34560805d798d1150416d",
+          "Name": "z",
+          "Description": "z",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0a0187fe89574ee8bedd6a55ab7941f3",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "0..20;",
+      "Id": "f480d00592ed40d6a6282cd4d9b35767",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c7b94ea1b39f40adbea8ba490cb26098",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Z\";",
+      "Id": "c71f919334824c1b8beca100fc6b59d3",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ca364a09cd3e4c31b3100d676b7a912f",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "15dedca8-1488-4170-956b-a70f5da14e29",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "99e23f7b9fb548d3938be8fbf6279094",
+      "Inputs": [
+        {
+          "Id": "d18f546ea71c4fc9bc0b5646a71c60b4",
+          "Name": "points",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "26940dc54a8342089928e436322b845b",
+          "Name": "field",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "61bd6f934cf04664b907676c831a38c1",
+          "Name": "points",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "filter points by X, Y, or Z "
     }
   ],
   "Connectors": [
@@ -410,11 +773,52 @@
       "Start": "9b0bded9c38c4cb982fc7ef65b7d5f7d",
       "End": "6714bb649f8144dda6e5fcfa6911cbbd",
       "Id": "1c4453ba466748018bfd6b3ac2a38434"
+    },
+    {
+      "Start": "d13a52b89f8e4526977f0f4ada12e7ef",
+      "End": "d91a0c83335b48e2885c6656088d3efa",
+      "Id": "27218d5a567c4b0abd4a1a07da376532"
+    },
+    {
+      "Start": "d13a52b89f8e4526977f0f4ada12e7ef",
+      "End": "8a6d53d333bb45519c4b82bf4a60fe7b",
+      "Id": "f51f0a7f816c4250909e93cb40a81ebc"
+    },
+    {
+      "Start": "d13a52b89f8e4526977f0f4ada12e7ef",
+      "End": "dcb595701d8a4edda84d9fd13856ebcc",
+      "Id": "2695589f44d94a098983e5bbdd6b3204"
+    },
+    {
+      "Start": "9ada420a45264f17821951546c55f2b9",
+      "End": "265d6214b9064ccbb07e78354e468186",
+      "Id": "db871297817148d08b54c4e954a7a259"
+    },
+    {
+      "Start": "049739b3109542af875a87429c99ca98",
+      "End": "1d47546eea5a4a7f802fe2214d68e6e5",
+      "Id": "46a95a94483441bf82c4589bd3c60f35"
+    },
+    {
+      "Start": "0a0187fe89574ee8bedd6a55ab7941f3",
+      "End": "d18f546ea71c4fc9bc0b5646a71c60b4",
+      "Id": "01fb436276274e9cae638d9093ed0a24"
+    },
+    {
+      "Start": "c7b94ea1b39f40adbea8ba490cb26098",
+      "End": "1a099a6aedc34560805d798d1150416d",
+      "Id": "7536a009e14b4b07a68ce61a544d5bf9"
+    },
+    {
+      "Start": "ca364a09cd3e4c31b3100d676b7a912f",
+      "End": "26940dc54a8342089928e436322b845b",
+      "Id": "2edc5c84b61e41deab48104adbeab7f2"
     }
   ],
   "Dependencies": [
     "c0bba0be-8cf0-4e2d-a912-8ecbb1943cfc",
-    "acf76e41-4dcd-4a11-86e6-f83cec8729f2"
+    "acf76e41-4dcd-4a11-86e6-f83cec8729f2",
+    "15dedca8-1488-4170-956b-a70f5da14e29"
   ],
   "NodeLibraryDependencies": [
     {
@@ -423,7 +827,8 @@
       "ReferenceType": "Package",
       "Nodes": [
         "71812364d52f43648f8995fe4c37b3dd",
-        "d449d7f8d2884ab3af0e52c73663db14"
+        "d449d7f8d2884ab3af0e52c73663db14",
+        "99e23f7b9fb548d3938be8fbf6279094"
       ]
     }
   ],
@@ -439,15 +844,15 @@
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "EyeX": -0.31384181976318359,
+      "EyeY": 10.584884643554688,
+      "EyeZ": 15.388906478881836,
+      "LookX": 12.426618576049805,
+      "LookY": -9.8847408294677734,
+      "LookZ": -27.030612945556641,
+      "UpX": 0.043661639094352722,
+      "UpY": 0.994521975517273,
+      "UpZ": -0.094972848892211914
     },
     "NodeViews": [
       {
@@ -559,6 +964,126 @@
         "Excluded": false,
         "X": 1167.4527431037407,
         "Y": -1462.4021992667108
+      },
+      {
+        "Id": "ed60b1f858694117922f280779fea4cf",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 1386.1124048284516,
+        "Y": -1369.2193838199673
+      },
+      {
+        "Id": "829a0d8917d14968b71a84c06b00d773",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 1711.6253373359405,
+        "Y": -1391.4375180260174
+      },
+      {
+        "Id": "89654a2c98ad4dd387cdc2cc661a35f5",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Code Block",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 1667.9647012150167,
+        "Y": -1084.6506714534635
+      },
+      {
+        "Id": "a860fb0f2ebf4004acc69475725c14b4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Code Block",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 1554.5399592848189,
+        "Y": -1147.6309690064888
+      },
+      {
+        "Id": "0460d8cd28e54e06b775238ed9d3b980",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 2353.9295480247779,
+        "Y": -1195.4482332209736
+      },
+      {
+        "Id": "56d4f45f9b744631b79678ee9726ef77",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 1870.5870609742406,
+        "Y": -556.09286447718819
+      },
+      {
+        "Id": "4ae4eb15d3774bf2ac8d98bab54cd713",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 2193.6125276110552,
+        "Y": -665.86462852139573
+      },
+      {
+        "Id": "208ee788e80c493595f8dd222e39c985",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Code Block",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 1445.0,
+        "Y": -1038.0
+      },
+      {
+        "Id": "847cca8c7cc74ecc82bbd283dff53553",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Code Block",
+        "ShowGeometry": false,
+        "Excluded": false,
+        "X": 3050.7144238529982,
+        "Y": -976.00415698873587
+      },
+      {
+        "Id": "f480d00592ed40d6a6282cd4d9b35767",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Code Block",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 2720.0,
+        "Y": -993.0
+      },
+      {
+        "Id": "c71f919334824c1b8beca100fc6b59d3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Code Block",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 3137.3667396900332,
+        "Y": -855.00814281628334
+      },
+      {
+        "Id": "99e23f7b9fb548d3938be8fbf6279094",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "getPositivePointByField",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 3483.6427059200132,
+        "Y": -947.5161246492753
       }
     ],
     "Annotations": [
@@ -581,8 +1106,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 21.65113204843243,
-    "Y": 928.77415013422137,
-    "Zoom": 0.39331723175312605
+    "X": -8898.3611752149918,
+    "Y": 2860.9320749289113,
+    "Zoom": 2.8068111957902877
   }
 }
