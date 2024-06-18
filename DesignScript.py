@@ -5,38 +5,33 @@ import clr
 import sys
 sys.path.append(r'C:\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\IronPython.StdLib.2.7.8')
 sys.path.append(r'U:\17_TrainingAdvanceDynamo\2_WORKING\Tool\Dynamo\Traning-Dynamo-2024\Library')
-import math 
 from System.Collections.Generic import *
 
 clr.AddReference("ProtoGeometry")
 from Autodesk.DesignScript.Geometry import *
-
-clr.AddReference('RevitAPI')
-import Autodesk
-from Autodesk.Revit.DB import *
-
-clr.AddReference('RevitAPIUI')
-from Autodesk.Revit.UI import*
-from  Autodesk.Revit.UI.Selection import*
-
-clr.AddReference("RevitNodes")
-import Revit
-clr.ImportExtensions(Revit.Elements)
-clr.ImportExtensions(Revit.GeometryConversion)
-
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-from RevitServices.Transactions import TransactionManager
-
 from Points import getMaxPoints
-################################################################
-doc = DocumentManager.Instance.CurrentDBDocument
-view = doc.ActiveView
-uidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
-################################################################
+
 
 #Preparing input from dynamo to revit
 elements = UnwrapElement(IN[0])
+field = IN[1]
+distance = IN[2]
 
-OUT =  getMaxPoints(elements)
+def translatePointByField(points, field = 'x', distance = 0):
+    newPoints = []
+    for point in points:
+        x = point.X
+        y = point.Y
+        z = point.Z
+        
+        if field == 'x' or field == 'X':
+            x = x + distance
+        if field == 'y' or field == 'Y':
+            y = y + distance
+        if field == 'z' or field == 'Z':
+            z = z + distance
+        _point = Point.ByCoordinates(x,y,z)
+        newPoints.append(_point)
+    return newPoints
+
+OUT = translatePointByField(elements, field, distance)
