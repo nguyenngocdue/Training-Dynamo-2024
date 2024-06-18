@@ -4,6 +4,7 @@
 import clr 
 import sys
 sys.path.append(r'C:\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\IronPython.StdLib.2.7.8')
+sys.path.append(r'U:\17_TrainingAdvanceDynamo\2_WORKING\Tool\Dynamo\Traning-Dynamo-2024\Library')
 import math 
 from System.Collections.Generic import *
 
@@ -28,13 +29,14 @@ import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 
+from Points import getMaxPoints
+################################################################
 doc = DocumentManager.Instance.CurrentDBDocument
 view = doc.ActiveView
 uidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
+################################################################
 
 #Preparing input from dynamo to revit
-element = UnwrapElement(IN[0])
+elements = UnwrapElement(IN[0])
 
-
-
-OUT = element
+OUT =  getMaxPoints(elements)
