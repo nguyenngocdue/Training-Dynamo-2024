@@ -35,16 +35,6 @@ uidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
 #Preparing input from dynamo to revit
 element = UnwrapElement(IN[0])
 
-def getDBLineByLines(elements):
-    re = []
-    for i in elements:
-        crv = i.GeometryCurve
-        re.append(crv)
-    return re
 
-factor = IN[1]
-dbLines = getDBLineByLines(element)
 
-points = [dbLine.Evaluate(factor, True).ToPoint() for dbLine in dbLines]
-
-OUT = points
+OUT = element
