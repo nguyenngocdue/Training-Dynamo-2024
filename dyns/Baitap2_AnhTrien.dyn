@@ -1,0 +1,267 @@
+{
+  "Uuid": "081948bc-4cee-4a1d-9a9a-f8fd0cb7baf9",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Baitap2",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 50.0,
+      "MinimumValue": 0.0,
+      "StepValue": 5.0,
+      "InputValue": 5.0,
+      "Id": "66721f6d418f4406abe7ec7d17529d70",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a75a17fa130446e7b2887093abfa0f7c",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 15.0,
+      "MinimumValue": 3.0,
+      "StepValue": 3.0,
+      "InputValue": 3.0,
+      "Id": "821e06566d5f40368feb7029fc17672b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b69d3410fd65413ca7a460bfca066a33",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 5.0,
+      "MinimumValue": 0.0,
+      "StepValue": 1.0,
+      "InputValue": 0.0,
+      "Id": "be426d4f6bdf4f3dbb9065a810aeb0e7",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e1a0885b4d524529b7053f950d46bba6",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "\r\nimport sys\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n# The inputs to this node will be stored as a list in the IN variables.\r\ncounts = IN[1]\r\ndistanPointY = IN[2]\r\ndistanPointZ = IN[3]\r\nif int(counts)>0 and int(distanPointZ) > 0:\r\n\tlstPoint1 = []\r\n\tlstPoint2 = []\r\n\tlstPoint3 = []\r\n\tlstPoint4 = []\r\n\tlstPoint5 = []\r\n\tlstPoint6 = []\r\n\tlstPoint7 = []\r\n# Place your code below this line\r\n\r\n\tfor i in range(int(counts)):\r\n\t    point1 = Point.ByCoordinates(i,0,int(distanPointZ))\r\n\t    lstPoint1.append(point1)\r\n\t    point2 = Point.ByCoordinates(i,int(distanPointY),int(distanPointZ))\r\n\t    lstPoint2.append(point2)\r\n\t    point3 = Point.ByCoordinates(i,2*int(distanPointY),int(distanPointZ))\r\n\t    lstPoint3.append(point3)\r\n\t    if i == int(counts)-1:\r\n\t        point4 = Point.ByCoordinates(i,0,0)\r\n\t        point5 = Point.ByCoordinates(i,2*int(distanPointY),0)\r\n\tP1 =  Point.ByCoordinates(lstPoint1[0].X,0,0)\r\n\tP2 =  Point.ByCoordinates(lstPoint3[0].X,2*int(distanPointY),0)\r\n\tlstLine1 = []\r\n\tlstLine2 = []\r\n\tlstLine3 = []\r\n\tlstLine4 = []\r\n\tlstLine5 = []\r\n\tlstLine6 = []\r\n\tlstLine7 = []\r\n\tlstLine8 = []\r\n\tfor i in range(len(lstPoint1)-1):\r\n\t    lstLine1.append(Line.ByStartPointEndPoint(lstPoint1[i],lstPoint2[1:][i]))\r\n\t    lstLine2.append(Line.ByStartPointEndPoint(lstPoint2[i],lstPoint1[1:][i]))\r\n\t    lstLine3.append(Line.ByStartPointEndPoint(lstPoint3[i],lstPoint2[1:][i]))\r\n\t    lstLine4.append(Line.ByStartPointEndPoint(lstPoint2[i],lstPoint3[1:][i]))\r\n\tlstLine5.append(Line.ByStartPointEndPoint(lstPoint1[0],P1))\r\n\tlstLine6.append(Line.ByStartPointEndPoint(lstPoint1[len(lstPoint1)-1],point4))\r\n\tlstLine7.append(Line.ByStartPointEndPoint(lstPoint3[0],P2))\r\n\tlstLine8.append(Line.ByStartPointEndPoint(lstPoint3[len(lstPoint1)-1],point5))\r\n\tOUT = lstLine1,lstLine2,lstLine3,lstLine4,lstLine5,lstLine6,lstLine7,lstLine8\r\n\r\n\r\n",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "8bd4eb5a83fc4b5b8d5f8412d9a23647",
+      "Inputs": [
+        {
+          "Id": "692d13d438b24fa184e09d3c54e08184",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9e905d3f9f274f8893d267ea62dfa704",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e3cf9df9487b4b35b2189273a3f18dff",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9969d2545f5f4fa79da837fe4926b2c2",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "45558a640fca417f89a68cb73e48c0c7",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "889f9821bafd4fbb86e66f8d96d90dfb",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f885bc6760164378bb3f5284e10bda41",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "a75a17fa130446e7b2887093abfa0f7c",
+      "End": "9e905d3f9f274f8893d267ea62dfa704",
+      "Id": "632bace3e6e64882aefff98d6a841ae3"
+    },
+    {
+      "Start": "b69d3410fd65413ca7a460bfca066a33",
+      "End": "e3cf9df9487b4b35b2189273a3f18dff",
+      "Id": "7f6bb2f6bb2949ce9e68d7cf720f5028"
+    },
+    {
+      "Start": "e1a0885b4d524529b7053f950d46bba6",
+      "End": "9969d2545f5f4fa79da837fe4926b2c2",
+      "Id": "c0affd9d8e32468282788758a12737af"
+    },
+    {
+      "Start": "f885bc6760164378bb3f5284e10bda41",
+      "End": "692d13d438b24fa184e09d3c54e08184",
+      "Id": "ce3472b26034421b8d21a9c4e6eaf166"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 100.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.10.1.3976",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 30.028226852416992,
+      "EyeY": 18.365765571594238,
+      "EyeZ": 18.076569557189941,
+      "LookX": -9.6384601593017578,
+      "LookY": -5.8181381225585938,
+      "LookZ": -27.817440032958984,
+      "UpX": 0.0068565588444471359,
+      "UpY": 0.99978071451187134,
+      "UpZ": 0.019789703190326691
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "X",
+        "Id": "66721f6d418f4406abe7ec7d17529d70",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -523.90106961617857,
+        "Y": 156.89697507142054
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Y",
+        "Id": "821e06566d5f40368feb7029fc17672b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -528.56444457093835,
+        "Y": 237.85575902194671
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Z",
+        "Id": "be426d4f6bdf4f3dbb9065a810aeb0e7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -526.80306768362686,
+        "Y": 322.65173833526671
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "8bd4eb5a83fc4b5b8d5f8412d9a23647",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 24.804445458605528,
+        "Y": 156.37282270062849
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "889f9821bafd4fbb86e66f8d96d90dfb",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -163.31217248339311,
+        "Y": 138.6000317500822
+      }
+    ],
+    "Annotations": [],
+    "X": 121.158248685077,
+    "Y": -131.28364990876895,
+    "Zoom": 1.2562396710474573
+  }
+}
