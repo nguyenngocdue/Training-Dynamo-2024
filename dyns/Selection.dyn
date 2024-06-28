@@ -1711,7 +1711,7 @@
     {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
       "NodeType": "BooleanInputNode",
-      "InputValue": false,
+      "InputValue": true,
       "Id": "ab26565e4ed643a4bcfe0447cdd5c2c8",
       "Inputs": [],
       "Outputs": [
@@ -2060,7 +2060,7 @@
     {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
       "NodeType": "BooleanInputNode",
-      "InputValue": false,
+      "InputValue": true,
       "Id": "79a33c9fdba142d6bd1a51da2be92982",
       "Inputs": [],
       "Outputs": [
@@ -2488,7 +2488,7 @@
     {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
       "NodeType": "BooleanInputNode",
-      "InputValue": false,
+      "InputValue": true,
       "Id": "235a3cca40bb40e19d06362c3812fa8f",
       "Inputs": [],
       "Outputs": [
@@ -3288,27 +3288,6 @@
       "Description": "Selection between a true and false."
     },
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
-      "FunctionSignature": "acf76e41-4dcd-4a11-86e6-f83cec8729f2",
-      "FunctionType": "Graph",
-      "NodeType": "FunctionNode",
-      "Id": "1019c14a432b47caa7607de4cce9056f",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "e3c69991e66b470c8c172ee13e1380fa",
-          "Name": "OUT",
-          "Description": "return value",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Let me coding. haha"
-    },
-    {
       "ConcreteType": "PythonNodeModels.PythonStringNode, PythonNodeModels",
       "Engine": "IronPython2",
       "VariableInputPorts": true,
@@ -4079,8 +4058,7 @@
     "ac6acb90-e6c0-464e-959b-a1140ae284b0",
     "45627d39-aee2-479b-8d50-29c7e20c4c35",
     "bc5d370c-a0d0-4ff2-b079-e789c69e72e9",
-    "66f270da-7ab3-4eaf-81ba-e883ce0fee3f",
-    "acf76e41-4dcd-4a11-86e6-f83cec8729f2"
+    "66f270da-7ab3-4eaf-81ba-e883ce0fee3f"
   ],
   "NodeLibraryDependencies": [
     {
@@ -4107,14 +4085,6 @@
       "ReferenceType": "Package",
       "Nodes": [
         "997d8e9a8ac8408ca4c377a7ad33e74d"
-      ]
-    },
-    {
-      "Name": "BIM3DM",
-      "Version": "2.1.26",
-      "ReferenceType": "Package",
-      "Nodes": [
-        "1019c14a432b47caa7607de4cce9056f"
       ]
     }
   ],
@@ -4432,12 +4402,12 @@
         "Y": 1629.5570748619659
       },
       {
-        "ShowGeometry": true,
+        "ShowGeometry": false,
         "Name": "Select Faces - PickObject ",
         "Id": "a14037f84de649e8ab307ca5832e248f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Excluded": false,
+        "Excluded": true,
         "X": 1358.2066427241866,
         "Y": -3391.2339560032588
       },
@@ -4988,7 +4958,7 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": true,
-        "X": -839.22403930206258,
+        "X": -840.05763803741149,
         "Y": -1710.3049455343719
       },
       {
@@ -5273,16 +5243,6 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "Code",
-        "Id": "1019c14a432b47caa7607de4cce9056f",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": -687.50385365222519,
-        "Y": -4129.0718676604483
-      },
-      {
-        "ShowGeometry": true,
         "Name": "Python Script From String",
         "Id": "7ed35e963c204f30a325df250647f6b9",
         "IsSetAsInput": false,
@@ -5539,7 +5499,7 @@
         "Left": -1164.316979320118,
         "Top": -2043.8935290761126,
         "Width": 1056.5794382800254,
-        "Height": 171.28720002336263,
+        "Height": 174.75982607135688,
         "FontSize": 36.0,
         "InitialTop": -1990.8935290761126,
         "InitialHeight": 172.19566024236406,
@@ -5698,8 +5658,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 3182.6234880891407,
-    "Y": 5223.7190850425513,
-    "Zoom": 0.89972497523110806
+    "X": 850.24665766052738,
+    "Y": 3845.1261085256106,
+    "Zoom": 0.8395081789410529
   }
 }
