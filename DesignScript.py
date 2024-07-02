@@ -17,6 +17,17 @@ field = IN[1]
 distance = IN[2]
 
 
+name = "Dynamo"
+isChecked = False
+longName = ""
+hasStatus = True
+columnsInProjectsA = []
+
+
+class Selection:
+    def getNamesByKeys():
+        pass
+
 
 
 OUT = translatePointByField(elements, field, distance)
