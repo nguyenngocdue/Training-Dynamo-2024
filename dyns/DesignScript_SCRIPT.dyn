@@ -1,8 +1,8 @@
 {
-  "Uuid": "2b558600-abc7-4178-b8f7-215be56370bc",
+  "Uuid": "5e7d7a37-e12a-4cfc-b5a9-35eced1c16d8",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "DesignScript",
+  "Name": "DesignScript_SCRIPT",
   "ElementResolver": {
     "ResolutionMap": {
       "Point": {
@@ -20,11 +20,11 @@
       "Engine": "CPython3",
       "EngineName": "CPython3",
       "VariableInputPorts": true,
-      "Id": "bd0ae6ccc6154c3db6d6708f4beb8b22",
+      "Id": "b5caa958e6a945d3abaa1e657ea0daaf",
       "NodeType": "PythonScriptNode",
       "Inputs": [
         {
-          "Id": "89f0cc00c125409fb0532891aed604bb",
+          "Id": "4e51485aaaea42419494822605337dfb",
           "Name": "IN[0]",
           "Description": "Input #0",
           "UsingDefaultValue": false,
@@ -35,7 +35,7 @@
       ],
       "Outputs": [
         {
-          "Id": "006b671b282b4d77a37cee7fd3de6d9f",
+          "Id": "1d5e947fb41542618ab3d169ad8cc6fd",
           "Name": "OUT",
           "Description": "Result of the python script",
           "UsingDefaultValue": false,
@@ -52,11 +52,11 @@
       "Engine": "CPython3",
       "EngineName": "CPython3",
       "VariableInputPorts": true,
-      "Id": "857242cb213f4940a928f85dbab1f910",
+      "Id": "2254472a839b474fa522df59e0e81229",
       "NodeType": "ExtensionNode",
       "Inputs": [
         {
-          "Id": "5dbad603fdf84735bdb85042718d01eb",
+          "Id": "438f241a07de48d9a8d6c3072b01cdde",
           "Name": "script",
           "Description": "Python script to run.",
           "UsingDefaultValue": false,
@@ -65,7 +65,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "86001a67460d478ebec5b06c30d7c8c7",
+          "Id": "e5b1e92c74e64bd3bcb778ff0344e6f9",
           "Name": "IN[0]",
           "Description": "Input #0",
           "UsingDefaultValue": false,
@@ -74,7 +74,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "c9c63ee9cfc04da8a937a8e33a5aa601",
+          "Id": "6844f8ef5bc04baea95d1df8e767b000",
           "Name": "IN[1]",
           "Description": "Input #1",
           "UsingDefaultValue": false,
@@ -83,7 +83,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "35ee9ca456294e588f1881a0797ae296",
+          "Id": "cd41a35bef4a49898d532641acb5d981",
           "Name": "IN[2]",
           "Description": "Input #2",
           "UsingDefaultValue": false,
@@ -94,7 +94,7 @@
       ],
       "Outputs": [
         {
-          "Id": "64320de894de4f978d78dcb8c4144bec",
+          "Id": "52980886266f4b298b3b1e4261a17e81",
           "Name": "OUT",
           "Description": "Result of the python script",
           "UsingDefaultValue": false,
@@ -108,12 +108,12 @@
     },
     {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
-      "Id": "b8374817722648b085266224bc915521",
+      "Id": "2422c736b796432d81a74ae20592e820",
       "NodeType": "BooleanInputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "3ad4ea4f57644723b5658f512203e2c8",
+          "Id": "ca8381568e3d474c905880e3132080b8",
           "Name": "",
           "Description": "Boolean",
           "UsingDefaultValue": false,
@@ -128,12 +128,12 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "Id": "168131ff82f84bbe92cfa5066fe41397",
+      "Id": "cee6163daeea4321b4282c43bfa06fbd",
       "NodeType": "CodeBlockNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "8e5aca2ce6fc4ccea2c1a0a4cb410f72",
+          "Id": "46ca6bafea3a47519005c78f09f33aa9",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -152,11 +152,11 @@
       "InstanceId": [
         "e7916335-d3c9-43f9-b7e7-7ffe87644957-03890f92:26:SURFACE"
       ],
-      "Id": "6dff25894f4449aa9a1ceff6479ba7e1",
+      "Id": "6dadd6bd127e4f648c65cd51ca57e677",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "9c5ba18f878e4dcb916ccc6c3e30752d",
+          "Id": "013ffefaf2ac48298916f5f53c804358",
           "Name": "Surface",
           "Description": "The selected elements.",
           "UsingDefaultValue": false,
@@ -172,11 +172,11 @@
       "ConcreteType": "Dynamo.Nodes.DSEdgeSelection, DSRevitNodesUI",
       "NodeType": "ExtensionNode",
       "InstanceId": [],
-      "Id": "f71bd598209343a4ade26dbbcd4fcb25",
+      "Id": "37a769a43be34d1e833f20f39082a457",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "f2a56f70a7974f2f9a9e504cfe1fbd0a",
+          "Id": "2a9a4c5a3e314f58b929d94c162ecc2a",
           "Name": "Curve",
           "Description": "The selected elements.",
           "UsingDefaultValue": false,
@@ -194,11 +194,11 @@
       "InstanceId": [
         "fb49611e-6019-4e05-8efe-a4852a7743ca-0384a466"
       ],
-      "Id": "3239628b42874905861936bb902fb842",
+      "Id": "1921ff154b0347c8ad4c83a9207f2eaa",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "3cfd69d171cc413dbc4c39edc73958e3",
+          "Id": "40d41d97713145a3b31d19b8cd71ae56",
           "Name": "Element",
           "Description": "The selected elements.",
           "UsingDefaultValue": false,
@@ -216,11 +216,11 @@
       "SelectedString": "",
       "NodeType": "ExtensionNode",
       "InstanceId": [],
-      "Id": "030d95994e5742d99aad07b036e57d55",
+      "Id": "f9656d1525034a489dc9a39c0dc68937",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "de2a2b103c3f4c5b93ae4f5d0f745a2f",
+          "Id": "dc707a34f60c4e74902ecc864d693b18",
           "Name": "Element",
           "Description": "The selected elements.",
           "UsingDefaultValue": false,
@@ -238,11 +238,11 @@
       "Engine": "IronPython2",
       "EngineName": "IronPython2",
       "VariableInputPorts": true,
-      "Id": "8673b6b5e8e642a88491e7380cfaefea",
+      "Id": "e64d4547388c4ef6bccdee617a3c8b9d",
       "NodeType": "PythonScriptNode",
       "Inputs": [
         {
-          "Id": "d8d07cf360e54628a8915fad02fa05eb",
+          "Id": "819fdb6cb1724223ba550fc63c591a93",
           "Name": "IN[0]",
           "Description": "Input #0",
           "UsingDefaultValue": false,
@@ -253,7 +253,7 @@
       ],
       "Outputs": [
         {
-          "Id": "3865a0edeed44b029efbec1759d29263",
+          "Id": "c619cb3d6bb343f8aee7a81d0e8245b6",
           "Name": "OUT",
           "Description": "Result of the python script",
           "UsingDefaultValue": false,
@@ -267,12 +267,12 @@
     },
     {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
-      "Id": "a843d4fa7ca34456a2040aeb8bccfe6b",
+      "Id": "85496e9ac1334a479cee17079a96b994",
       "NodeType": "BooleanInputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "82a3c9af0de04a5f92bcbbe8a75fa7ea",
+          "Id": "97e3f68e970045fb963d38315466b495",
           "Name": "",
           "Description": "Boolean",
           "UsingDefaultValue": false,
@@ -291,11 +291,11 @@
       "Engine": "CPython3",
       "EngineName": "CPython3",
       "VariableInputPorts": true,
-      "Id": "6e33891685234be8be8a027aeebfd521",
+      "Id": "b5c642b16480465397979249a5bcf8fd",
       "NodeType": "PythonScriptNode",
       "Inputs": [
         {
-          "Id": "2184da2465b4417892a98fd3477ce474",
+          "Id": "486531272c23473ea40eee26b8c1ba73",
           "Name": "IN[0]",
           "Description": "Input #0",
           "UsingDefaultValue": false,
@@ -306,7 +306,7 @@
       ],
       "Outputs": [
         {
-          "Id": "6db1ddad638c404a8868dc39d0992cae",
+          "Id": "abb11dc254504216b90966db6e5b6e49",
           "Name": "OUT",
           "Description": "Result of the python script",
           "UsingDefaultValue": false,
@@ -322,12 +322,12 @@
       "ConcreteType": "DSRevitNodesUI.Levels, DSRevitNodesUI",
       "SelectedIndex": 1,
       "SelectedString": "2FL",
-      "Id": "536fd000b6ea4560b58245eaef346ce3",
+      "Id": "b8803d8615264b8583d44058d88495e5",
       "NodeType": "ExtensionNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "163dc82a51ed489a9b0d55f82983805f",
+          "Id": "9a8518b655f540d9bbaf94c9e6a4911e",
           "Name": "Levels",
           "Description": "The selected Levels",
           "UsingDefaultValue": false,
@@ -342,27 +342,27 @@
   ],
   "Connectors": [
     {
-      "Start": "006b671b282b4d77a37cee7fd3de6d9f",
-      "End": "5dbad603fdf84735bdb85042718d01eb",
-      "Id": "122634699abe435caefde34245dd33eb",
+      "Start": "1d5e947fb41542618ab3d169ad8cc6fd",
+      "End": "438f241a07de48d9a8d6c3072b01cdde",
+      "Id": "cd2f613faa5a4bcc849b783f9fe2591a",
       "IsHidden": "False"
     },
     {
-      "Start": "3ad4ea4f57644723b5658f512203e2c8",
-      "End": "89f0cc00c125409fb0532891aed604bb",
-      "Id": "40f12d151b2a4728937e65873dd431ca",
+      "Start": "ca8381568e3d474c905880e3132080b8",
+      "End": "4e51485aaaea42419494822605337dfb",
+      "Id": "fbe448327c1a46e99bce8e98088dfcb7",
       "IsHidden": "False"
     },
     {
-      "Start": "8e5aca2ce6fc4ccea2c1a0a4cb410f72",
-      "End": "c9c63ee9cfc04da8a937a8e33a5aa601",
-      "Id": "d4f9d2040e2e462d8b601ebab56a6b1f",
+      "Start": "46ca6bafea3a47519005c78f09f33aa9",
+      "End": "6844f8ef5bc04baea95d1df8e767b000",
+      "Id": "84dfd2fc7d224e8584b818f68ca14b7b",
       "IsHidden": "False"
     },
     {
-      "Start": "82a3c9af0de04a5f92bcbbe8a75fa7ea",
-      "End": "d8d07cf360e54628a8915fad02fa05eb",
-      "Id": "c33fb651fbd748548bf53b4337ae8b2f",
+      "Start": "97e3f68e970045fb963d38315466b495",
+      "End": "819fdb6cb1724223ba550fc63c591a93",
+      "Id": "ce7c014b8aeb4b12a10e6a0274f02abd",
       "IsHidden": "False"
     }
   ],
@@ -416,7 +416,7 @@
     "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "bd0ae6ccc6154c3db6d6708f4beb8b22",
+        "Id": "b5caa958e6a945d3abaa1e657ea0daaf",
         "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -426,7 +426,7 @@
         "Y": -626.35144475320431
       },
       {
-        "Id": "857242cb213f4940a928f85dbab1f910",
+        "Id": "2254472a839b474fa522df59e0e81229",
         "Name": "Python Script From String",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -436,7 +436,7 @@
         "Y": -612.72105695452478
       },
       {
-        "Id": "b8374817722648b085266224bc915521",
+        "Id": "2422c736b796432d81a74ae20592e820",
         "Name": "Boolean",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -446,7 +446,7 @@
         "Y": -681.58358992058879
       },
       {
-        "Id": "168131ff82f84bbe92cfa5066fe41397",
+        "Id": "cee6163daeea4321b4282c43bfa06fbd",
         "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -456,7 +456,7 @@
         "Y": -389.73382269948456
       },
       {
-        "Id": "6dff25894f4449aa9a1ceff6479ba7e1",
+        "Id": "6dadd6bd127e4f648c65cd51ca57e677",
         "Name": "Select Face",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -466,7 +466,7 @@
         "Y": -830.27567148697074
       },
       {
-        "Id": "f71bd598209343a4ade26dbbcd4fcb25",
+        "Id": "37a769a43be34d1e833f20f39082a457",
         "Name": "Select Edge",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -476,7 +476,7 @@
         "Y": -693.22492731516627
       },
       {
-        "Id": "3239628b42874905861936bb902fb842",
+        "Id": "1921ff154b0347c8ad4c83a9207f2eaa",
         "Name": "Select Model Element",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -486,7 +486,7 @@
         "Y": -575.38690428894211
       },
       {
-        "Id": "030d95994e5742d99aad07b036e57d55",
+        "Id": "f9656d1525034a489dc9a39c0dc68937",
         "Name": "Select Model Element By Category",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -496,7 +496,7 @@
         "Y": -424.24683127704566
       },
       {
-        "Id": "8673b6b5e8e642a88491e7380cfaefea",
+        "Id": "e64d4547388c4ef6bccdee617a3c8b9d",
         "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -506,7 +506,7 @@
         "Y": -155.19601423082412
       },
       {
-        "Id": "a843d4fa7ca34456a2040aeb8bccfe6b",
+        "Id": "85496e9ac1334a479cee17079a96b994",
         "Name": "Boolean",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -516,7 +516,7 @@
         "Y": -188.0517871292796
       },
       {
-        "Id": "6e33891685234be8be8a027aeebfd521",
+        "Id": "b5c642b16480465397979249a5bcf8fd",
         "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -526,7 +526,7 @@
         "Y": -52.212022546727212
       },
       {
-        "Id": "536fd000b6ea4560b58245eaef346ce3",
+        "Id": "b8803d8615264b8583d44058d88495e5",
         "Name": "Levels",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
@@ -538,16 +538,16 @@
     ],
     "Annotations": [
       {
-        "Id": "a233aff72e714a1f8e8d75f527e4e1fb",
+        "Id": "851154db61bf4396a536b1a26ef73dbf",
         "Title": "Design Script",
         "DescriptionText": null,
         "IsExpanded": true,
         "WidthAdjustment": 0.0,
         "HeightAdjustment": 0.0,
         "Nodes": [
-          "bd0ae6ccc6154c3db6d6708f4beb8b22",
-          "b8374817722648b085266224bc915521",
-          "857242cb213f4940a928f85dbab1f910"
+          "b5caa958e6a945d3abaa1e657ea0daaf",
+          "2422c736b796432d81a74ae20592e820",
+          "2254472a839b474fa522df59e0e81229"
         ],
         "HasNestedGroups": false,
         "Left": 3697.4267718228461,

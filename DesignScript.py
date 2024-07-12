@@ -4,30 +4,39 @@
 import clr 
 import sys
 sys.path.append(r'C:\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\IronPython.StdLib.2.7.8')
-sys.path.append(r'U:\17_TrainingAdvanceDynamo\2_WORKING\Tool\Dynamo\Traning-Dynamo-2024\Library')
+import math 
 from System.Collections.Generic import *
 
 clr.AddReference("ProtoGeometry")
 from Autodesk.DesignScript.Geometry import *
-from Points import *
 
-#Preparing input from dynamo to revit
+clr.AddReference('RevitAPI')
+import Autodesk
+from Autodesk.Revit.DB import *
+
+clr.AddReference('RevitAPIUI')
+from Autodesk.Revit.UI import*
+from  Autodesk.Revit.UI.Selection import*
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+view = doc.ActiveView
+uidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
+
+################################################################
+def sortPoints(points):
+    sortedIndices = sorted(enumerate(points), key= lambda point: point[1].X)
+    return sortedIndices
+################################################################
 elements = UnwrapElement(IN[0])
-field = IN[1]
-distance = IN[2]
+OUT = sortPoints(elements)
 
-
-name = "Dynamo"
-isChecked = False
-longName = ""
-hasStatus = True
-columnsInProjectsA = []
-
-
-class Selection:
-    def getNamesByKeys():
-        pass
-
-
-
-OUT = translatePointByField(elements, field, distance)

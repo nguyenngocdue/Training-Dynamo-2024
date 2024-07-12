@@ -1,64 +1,17 @@
-
-info = {
-    'structural_column_1' :{
-        'bxh': '200x300',
-        'length': 1000,
-        'volume' : 600,
-        'mark' : 'D1'
-    },
-     'structural_column_2' : {
-
-        'bxh': '200x300',
-
-        'length': 1000,
-
-        'volume' : 600,
-
-        'mark' : 'D1'
-    },
-
-     'structural_column_3' : {
-
-        'bxh': '200x300',
-
-        'length': 1000,
-
-        'volume' : 600,
-
-        'mark' : 'D1'
-
-    },
-
-     'structural_column_4' : {
-        'bxh': '200x300',
-        'length': 1000,
-        'volume' : 600,
-        'mark' : 'D1'
-    },
-     'structural_column_5' : {
-
-        'bxh': '200x300',
-
-        'length': 1000,
-
-        'volume' : 600,
-
-        'mark' : 'D1'
-
-    },
-
-     'structural_column_6' : {
-
-        'bxh': '200x300',
-
-        'length': 1000,
-
-        'volume' : 600,
-
-        'mark' : 'D1'
-
-    }
+_dict = {
+    'type_name' : 'Structural Framing',
+    'dimension' : '200x300',
+    'volume': 0.6
+    'mark' : 'D1'
 }
 
-print(info)
+_list = [1,2,3,4,5]
+    #   0  1  2 3 4 5
 
+# CREATE READ UPDATE
+#int CREATE READ UPDATE -> LOOP, IF ELSE ELIF, TRY EXCEPT , DEF, CLASS
+#str CREATE READ UPDATE 
+#list CREATE READ UPDATE 
+#dict CREATE READ UPDATE 
+#set CREATE READ UPDATE 
+#tuple CREATE READ UPDATE 
