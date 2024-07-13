@@ -3,7 +3,16 @@
 """________________Welcome to BIM3DM-DYNAMO API___________________"""
 import clr 
 import sys
-sys.path.append(r'C:\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\IronPython.StdLib.2.7.8')
+import sys
+import importlib
+
+sys.path.append(r'U:\17_TrainingAdvanceDynamo\2_WORKING\Tool\Dynamo\Training-Dynamo-2024')
+
+from Libraries.ListObjects import *
+from Libraries.Parameters import *
+from Libraries.Points import *
+from Libraries.Units import *
+
 import math 
 from System.Collections.Generic import *
 
@@ -22,7 +31,6 @@ clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements)
 clr.ImportExtensions(Revit.GeometryConversion)
-
 clr.AddReference("RevitServices")
 import RevitServices
 from RevitServices.Persistence import DocumentManager
@@ -33,10 +41,11 @@ view = doc.ActiveView
 uidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
 
 ################################################################
-def sortPoints(points):
-    sortedIndices = sorted(enumerate(points), key= lambda point: point[1].X)
-    return sortedIndices
-################################################################
 elements = UnwrapElement(IN[0])
-OUT = sortPoints(elements)
+
+points = [getLocationElement(e) for e in elements]
+index , sortedPoints  = sortPoints(points)
+OUT = getItemsByIndexes(elements, index)
+
+
 
