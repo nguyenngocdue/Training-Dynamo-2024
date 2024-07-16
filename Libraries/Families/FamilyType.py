@@ -12,6 +12,7 @@ from Libraries.ListObjects import *
 from Libraries.Parameters import *
 from Libraries.Points import *
 from Libraries.Units import *
+from Libraries.Families import *
 
 import math 
 from System.Collections.Generic import *
@@ -40,8 +41,6 @@ doc = DocumentManager.Instance.CurrentDBDocument
 view = doc.ActiveView
 uidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
 
-##############################################################################
-def sortFamiliesByXYZ(elements):
-    points = [getLocationElement(e) for e in elements]
-    index , sortedPoints  = sortPoints(points)
-    return getItemsByIndexes(elements, index)
+################################################################
+def getFamilyType(eles):
+    return [doc.GetElement(ele.GetTypeId()) for ele in eles]

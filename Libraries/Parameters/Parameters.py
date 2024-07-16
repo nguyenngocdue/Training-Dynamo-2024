@@ -16,3 +16,14 @@ def getParameterValueFromLookup(element, paramName):
         else: "123"
     else:
         None
+
+def getParameterValueByNames(eles, names):
+    myDimension = {k :[] for k in names}
+    for ele in eles:
+        familyType = doc.GetElement(ele.GetTypeId())
+        allParams = familyType.Parameters
+        for param in allParams:
+            name = param.Definition.Name
+            if name in names:
+                myDimension[name].append(convertUnits(param.AsDouble()))
+    return myDimension

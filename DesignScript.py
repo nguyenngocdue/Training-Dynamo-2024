@@ -14,6 +14,7 @@ from Libraries.Points import *
 from Libraries.Units import *
 from Libraries.Families import *
 
+
 import math 
 from System.Collections.Generic import *
 
@@ -42,11 +43,32 @@ view = doc.ActiveView
 uidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
 
 ################################################################
+def getFamilyType(eles):
+    return [doc.GetElement(ele.GetTypeId()) for ele in eles]
+
+def setParameterValueByNames(eles, names, valuesOfNames):
+    for ele in eles:
+        familyType = doc.GetElement(ele.GetTypeId())
+        allParams = familyType.Parameters
+        TransactionManager.Instance.EnsureInTransaction(doc)
+        for param in allParams:
+            nameParam = param.Definition.Name
+            for i in range(len(names)):
+                name = names[i]
+                if nameParam == name:
+                    if param.StorageType == StorageType.Double:
+                        value = valuesOfNames[i]
+                        param.Set(value/304.84)
+                        # break
+        TransactionManager.Instance.TransactionTaskDone()
+
+
+
 
 ################################################################
-elements = UnwrapElement(IN[0])
+elements = UnwrapElement(IN[1])
+names = IN[2]
+valuesOfNames = IN[3]
 
-OUT = sortFamiliesByXYZ(elements)
 
-
-
+OUT = setParameterValueByNames(elements, names, valuesOfNames)
