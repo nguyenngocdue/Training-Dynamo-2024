@@ -1,0 +1,508 @@
+{
+  "Uuid": "5e7d7a37-e12a-4cfc-b5a9-35eced1c16d8",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "RevitToolSetup",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "import clr\r\nimport System\r\n \r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI import*\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import Selection\r\nfrom  Autodesk.Revit.UI.Selection import ISelectionFilter\r\n\r\nimport os\r\nimport shutil\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import*\r\n#########################################################################\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#########################################################################\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nView = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n#########################################################################\r\n\r\n\r\ntypeSource = ['.py','.dyn','.dll']\r\nextTabPath = r'C:\\Users\\NGUYEN NGOC DUE\\AppData\\Roaming\\pyRevit\\Extensions\\BIM3DM.extension\\BIM3DM.tab'\r\n\r\nclass MainForm(System.Windows.Forms.Form):\r\n    def __init__(self):\r\n        self.InitializeComponent()\r\n        self._cbbSourceFile.SelectionChangeCommitted += self.OnSourceFileChanged\r\n\r\n    def InitializeComponent(self):\r\n\t\t\t\t\tself._label1 = System.Windows.Forms.Label()\r\n\t\t\t\t\tself._txtbPanel = System.Windows.Forms.TextBox()\r\n\t\t\t\t\tself._label2 = System.Windows.Forms.Label()\r\n\t\t\t\t\tself._label4 = System.Windows.Forms.Label()\r\n\t\t\t\t\tself._cbbSourceFile = System.Windows.Forms.ComboBox()\r\n\t\t\t\t\tself._label5 = System.Windows.Forms.Label()\r\n\t\t\t\t\tself._txtbIconPath = System.Windows.Forms.TextBox()\r\n\t\t\t\t\tself._btnSelIcon = System.Windows.Forms.Button()\r\n\t\t\t\t\tself._btnCancel = System.Windows.Forms.Button()\r\n\t\t\t\t\tself._btnOk = System.Windows.Forms.Button()\r\n\t\t\t\t\tself._txtbBtn = System.Windows.Forms.TextBox()\r\n\t\t\t\t\tself._groupBox1 = System.Windows.Forms.GroupBox()\r\n\t\t\t\t\tself._groupBox2 = System.Windows.Forms.GroupBox()\r\n\t\t\t\t\tself._groupBox3 = System.Windows.Forms.GroupBox()\r\n\t\t\t\t\tself._txtbSourceFilePath = System.Windows.Forms.TextBox()\r\n\t\t\t\t\tself._groupBox1.SuspendLayout()\r\n\t\t\t\t\tself._groupBox2.SuspendLayout()\r\n\t\t\t\t\tself._groupBox3.SuspendLayout()\r\n\t\t\t\t\tself.SuspendLayout()\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# label1\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._label1.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._label1.Location = System.Drawing.Point(19, 32)\r\n\t\t\t\t\tself._label1.Name = \"label1\"\r\n\t\t\t\t\tself._label1.Size = System.Drawing.Size(81, 23)\r\n\t\t\t\t\tself._label1.TabIndex = 0\r\n\t\t\t\t\tself._label1.Text = \"Panel Name:\"\r\n\t\t\t\t\tself._label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\t\t\tself._label1.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# txtbPanel\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._txtbPanel.Location = System.Drawing.Point(125, 32)\r\n\t\t\t\t\tself._txtbPanel.Name = \"txtbPanel\"\r\n\t\t\t\t\tself._txtbPanel.Size = System.Drawing.Size(205, 23)\r\n\t\t\t\t\tself._txtbPanel.TabIndex = 1\r\n\t\t\t\t\tself._txtbPanel.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# label2\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._label2.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._label2.Location = System.Drawing.Point(406, 32)\r\n\t\t\t\t\tself._label2.Name = \"label2\"\r\n\t\t\t\t\tself._label2.Size = System.Drawing.Size(100, 23)\r\n\t\t\t\t\tself._label2.TabIndex = 2\r\n\t\t\t\t\tself._label2.Text = \"Button Name:\"\r\n\t\t\t\t\tself._label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\t\t\tself._label2.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# label4\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._label4.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._label4.Location = System.Drawing.Point(19, 19)\r\n\t\t\t\t\tself._label4.Name = \"label4\"\r\n\t\t\t\t\tself._label4.Size = System.Drawing.Size(100, 23)\r\n\t\t\t\t\tself._label4.TabIndex = 4\r\n\t\t\t\t\tself._label4.Text = \"Select A File:\"\r\n\t\t\t\t\tself._label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\t\t\tself._label4.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# cbbSourceFile\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._cbbSourceFile.FormattingEnabled = True\r\n\t\t\t\t\tself._cbbSourceFile.Location = System.Drawing.Point(125, 19)\r\n\t\t\t\t\tself._cbbSourceFile.Name = \"cbbSourceFile\"\r\n\t\t\t\t\tself._cbbSourceFile.Size = System.Drawing.Size(205, 21)\r\n\t\t\t\t\tself._cbbSourceFile.TabIndex = 5\r\n\t\t\t\t\tself._cbbSourceFile.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# label5\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._label5.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._label5.Location = System.Drawing.Point(19, 22)\r\n\t\t\t\t\tself._label5.Name = \"label5\"\r\n\t\t\t\t\tself._label5.Size = System.Drawing.Size(69, 23)\r\n\t\t\t\t\tself._label5.TabIndex = 6\r\n\t\t\t\t\tself._label5.Text = \"Icon Path:\"\r\n\t\t\t\t\tself._label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\t\t\tself._label5.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# txtbIconPath\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._txtbIconPath.Location = System.Drawing.Point(125, 22)\r\n\t\t\t\t\tself._txtbIconPath.Name = \"txtbIconPath\"\r\n\t\t\t\t\tself._txtbIconPath.Size = System.Drawing.Size(501, 23)\r\n\t\t\t\t\tself._txtbIconPath.TabIndex = 7\r\n\t\t\t\t\tself._txtbIconPath.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# btnSelIcon\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._btnSelIcon.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\t\t\t\tself._btnSelIcon.Location = System.Drawing.Point(632, 22)\r\n\t\t\t\t\tself._btnSelIcon.Name = \"btnSelIcon\"\r\n\t\t\t\t\tself._btnSelIcon.Size = System.Drawing.Size(86, 23)\r\n\t\t\t\t\tself._btnSelIcon.TabIndex = 9\r\n\t\t\t\t\tself._btnSelIcon.Text = \"Browse\"\r\n\t\t\t\t\tself._btnSelIcon.UseVisualStyleBackColor = False\r\n\t\t\t\t\tself._btnSelIcon.UseWaitCursor = True\r\n\t\t\t\t\tself._btnSelIcon.Click += self.BtnSelIconClick\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# btnCancel\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._btnCancel.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\t\t\t\tself._btnCancel.Location = System.Drawing.Point(418, 212)\r\n\t\t\t\t\tself._btnCancel.Name = \"btnCancel\"\r\n\t\t\t\t\tself._btnCancel.Size = System.Drawing.Size(114, 30)\r\n\t\t\t\t\tself._btnCancel.TabIndex = 10\r\n\t\t\t\t\tself._btnCancel.Text = \"Cancel\"\r\n\t\t\t\t\tself._btnCancel.UseVisualStyleBackColor = False\r\n\t\t\t\t\tself._btnCancel.UseWaitCursor = True\r\n\t\t\t\t\tself._btnCancel.Click += self.BtnCancelClick\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# btnOk\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._btnOk.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\t\t\t\tself._btnOk.Location = System.Drawing.Point(538, 212)\r\n\t\t\t\t\tself._btnOk.Name = \"btnOk\"\r\n\t\t\t\t\tself._btnOk.Size = System.Drawing.Size(114, 30)\r\n\t\t\t\t\tself._btnOk.TabIndex = 11\r\n\t\t\t\t\tself._btnOk.Text = \"OK\"\r\n\t\t\t\t\tself._btnOk.UseVisualStyleBackColor = False\r\n\t\t\t\t\tself._btnOk.UseWaitCursor = True\r\n\t\t\t\t\tself._btnOk.Click += self.BtnOkClick\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# txtbBtn\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._txtbBtn.Location = System.Drawing.Point(512, 32)\r\n\t\t\t\t\tself._txtbBtn.Name = \"txtbBtn\"\r\n\t\t\t\t\tself._txtbBtn.Size = System.Drawing.Size(205, 23)\r\n\t\t\t\t\tself._txtbBtn.TabIndex = 12\r\n\t\t\t\t\tself._txtbBtn.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# groupBox1\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._groupBox1.Controls.Add(self._label5)\r\n\t\t\t\t\tself._groupBox1.Controls.Add(self._txtbIconPath)\r\n\t\t\t\t\tself._groupBox1.Controls.Add(self._btnSelIcon)\r\n\t\t\t\t\tself._groupBox1.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._groupBox1.Location = System.Drawing.Point(26, 146)\r\n\t\t\t\t\tself._groupBox1.Name = \"groupBox1\"\r\n\t\t\t\t\tself._groupBox1.Size = System.Drawing.Size(724, 60)\r\n\t\t\t\t\tself._groupBox1.TabIndex = 13\r\n\t\t\t\t\tself._groupBox1.TabStop = False\r\n\t\t\t\t\tself._groupBox1.Text = \"Icon\"\r\n\t\t\t\t\tself._groupBox1.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# groupBox2\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._groupBox2.Controls.Add(self._label1)\r\n\t\t\t\t\tself._groupBox2.Controls.Add(self._txtbPanel)\r\n\t\t\t\t\tself._groupBox2.Controls.Add(self._txtbBtn)\r\n\t\t\t\t\tself._groupBox2.Controls.Add(self._label2)\r\n\t\t\t\t\tself._groupBox2.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._groupBox2.Location = System.Drawing.Point(26, 12)\r\n\t\t\t\t\tself._groupBox2.Name = \"groupBox2\"\r\n\t\t\t\t\tself._groupBox2.Size = System.Drawing.Size(723, 72)\r\n\t\t\t\t\tself._groupBox2.TabIndex = 14\r\n\t\t\t\t\tself._groupBox2.TabStop = False\r\n\t\t\t\t\tself._groupBox2.Text = \"Button\"\r\n\t\t\t\t\tself._groupBox2.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# groupBox3\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._groupBox3.Controls.Add(self._txtbSourceFilePath)\r\n\t\t\t\t\tself._groupBox3.Controls.Add(self._label4)\r\n\t\t\t\t\tself._groupBox3.Controls.Add(self._cbbSourceFile)\r\n\t\t\t\t\tself._groupBox3.Location = System.Drawing.Point(26, 90)\r\n\t\t\t\t\tself._groupBox3.Name = \"groupBox3\"\r\n\t\t\t\t\tself._groupBox3.Size = System.Drawing.Size(724, 58)\r\n\t\t\t\t\tself._groupBox3.TabIndex = 15\r\n\t\t\t\t\tself._groupBox3.TabStop = False\r\n\t\t\t\t\tself._groupBox3.Text = \"Source\"\r\n\t\t\t\t\tself._groupBox3.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# txtbSourceFilePath\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._txtbSourceFilePath.Location = System.Drawing.Point(343, 19)\r\n\t\t\t\t\tself._txtbSourceFilePath.Name = \"txtbSourceFilePath\"\r\n\t\t\t\t\tself._txtbSourceFilePath.ReadOnly = True\r\n\t\t\t\t\tself._txtbSourceFilePath.Size = System.Drawing.Size(375, 20)\r\n\t\t\t\t\tself._txtbSourceFilePath.TabIndex = 0\r\n\t\t\t\t\tself._txtbSourceFilePath.UseWaitCursor = True\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# MainForm\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself.BackColor = System.Drawing.SystemColors.ButtonHighlight\r\n\t\t\t\t\tself.ClientSize = System.Drawing.Size(757, 248)\r\n\t\t\t\t\tself.Controls.Add(self._groupBox3)\r\n\t\t\t\t\tself.Controls.Add(self._groupBox2)\r\n\t\t\t\t\tself.Controls.Add(self._groupBox1)\r\n\t\t\t\t\tself.Controls.Add(self._btnOk)\r\n\t\t\t\t\tself.Controls.Add(self._btnCancel)\r\n\t\t\t\t\tself.Font = System.Drawing.Font(\"Microsoft Sans Serif\", 8.25, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog\r\n\t\t\t\t\tself.Name = \"MainForm\"\r\n\t\t\t\t\tself.RightToLeft = System.Windows.Forms.RightToLeft.No\r\n\t\t\t\t\tself.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen\r\n\t\t\t\t\tself.Text = \"Revit Tool Setup\"\r\n\t\t\t\t\tself.TopMost = True\r\n\t\t\t\t\tself.UseWaitCursor = True\r\n\t\t\t\t\tself._groupBox1.ResumeLayout(False)\r\n\t\t\t\t\tself._groupBox1.PerformLayout()\r\n\t\t\t\t\tself._groupBox2.ResumeLayout(False)\r\n\t\t\t\t\tself._groupBox2.PerformLayout()\r\n\t\t\t\t\tself._groupBox3.ResumeLayout(False)\r\n\t\t\t\t\tself._groupBox3.PerformLayout()\r\n\t\t\t\t\tself.ResumeLayout(False)\r\n\r\n    def OnSourceFileChanged(self, sender, e):\r\n    \tpass\r\n\r\n    def BtnCancelClick(self, sender, e):\r\n        self.Close()\r\n\r\n    def BtnOkClick(self, sender, e):\r\n        self.Close()\r\n\r\n    def BtnSelIconClick(self, sender, e):\r\n    \tpass\r\nf = MainForm()\r\nApplication.Run(f)\r\n",
+      "Engine": "IronPython2",
+      "EngineName": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "38ee50de0bc34785a9cdb3712d6591a3",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "30df12ee097f44e1a18111db235bb355",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "34540a535c8542a1904eb7117935c1c1",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3e0a29a24ce34f5a886d6eb14c5b86c4",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "fa47c1a0c07a4d55b287d6bc8794d070",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1b6e28837a0949098886ab77fb4c4e92",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": false
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonStringNode, PythonNodeModels",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "8804d05b3bef4685b318a98347ff5d15",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "c98d6834a0284eb0be2c6965c19704f0",
+          "Name": "script",
+          "Description": "Python script to run.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0f016de8414d4b76891770050d37ca54",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "12a44973155d46a09dbb9f7399d42690",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6fb20723241e49a2a86450551c3cff55",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs a Python script from a string."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#f = open(r\"U:\\17_TrainingAdvanceDynamo\\2_WORKING\\Tool\\Dynamo\\Training-Dynamo-2024\\DesignScript.py\", \"r\")\r\n\r\nf = open(r\"A:\\Library-Dynamo-Python-CSharp\\test.py\", \"r\")\r\nOUT = f.read() \r\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "d790d5169b2449d78bcb1b8babc8852a",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "30e9b718236d4e718bc23d646021cc48",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b6ff932be7ab484bab2a7fec1f7c1af6",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "3e8ff0a9df9d4c5383784732563c0ee1",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2cda73a39601442eb3fc8a9be6777d9f",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": false
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "import clr\r\nimport System\r\n \r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI import*\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import Selection\r\nfrom  Autodesk.Revit.UI.Selection import ISelectionFilter\r\n\r\nimport os\r\nimport shutil\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import*\r\n#########################################################################\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#########################################################################\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nView = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n#########################################################################\r\n\r\ntypeSource = ['.py','.dyn','.dll']\r\nextTabPath = r'C:\\Users\\NGUYEN NGOC DUE\\AppData\\Roaming\\pyRevit\\Extensions\\BIM3DM.extension\\BIM3DM.tab'\r\n\r\nclass MainForm(System.Windows.Forms.Form):\r\n\tdef __init__(self):\r\n\t\tself.InitializeComponent()\r\n\t\tself._cbbSourceFile.SelectionChangeCommitted += self.OnSourceFileChanged\r\n\r\n\tdef InitializeComponent(self):\r\n\t\tself._label1 = System.Windows.Forms.Label()\r\n\t\tself._txtbPanel = System.Windows.Forms.TextBox()\r\n\t\tself._label2 = System.Windows.Forms.Label()\r\n\t\tself._label4 = System.Windows.Forms.Label()\r\n\t\tself._cbbSourceFile = System.Windows.Forms.ComboBox()\r\n\t\tself._label5 = System.Windows.Forms.Label()\r\n\t\tself._txtbIconPath = System.Windows.Forms.TextBox()\r\n\t\tself._btnSelIcon = System.Windows.Forms.Button()\r\n\t\tself._btnCancel = System.Windows.Forms.Button()\r\n\t\tself._btnOk = System.Windows.Forms.Button()\r\n\t\tself._txtbBtn = System.Windows.Forms.TextBox()\r\n\t\tself._groupBox1 = System.Windows.Forms.GroupBox()\r\n\t\tself._groupBox2 = System.Windows.Forms.GroupBox()\r\n\t\tself._groupBox3 = System.Windows.Forms.GroupBox()\r\n\t\tself._txtbSourceFilePath = System.Windows.Forms.TextBox()\r\n\r\n\t\tself._groupBox1.SuspendLayout()\r\n\t\tself._groupBox2.SuspendLayout()\r\n\t\tself._groupBox3.SuspendLayout()\r\n\t\tself.SuspendLayout()\r\n\t\t\r\n\t\t# label1\r\n\t\tself._label1.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._label1.Location = System.Drawing.Point(19, 32)\r\n\t\tself._label1.Name = \"label1\"\r\n\t\tself._label1.Size = System.Drawing.Size(81, 23)\r\n\t\tself._label1.TabIndex = 0\r\n\t\tself._label1.Text = \"Panel Name:\"\r\n\t\tself._label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\r\n\t\t# txtbPanel\r\n\t\tself._txtbPanel.Location = System.Drawing.Point(125, 32)\r\n\t\tself._txtbPanel.Name = \"txtbPanel\"\r\n\t\tself._txtbPanel.Size = System.Drawing.Size(205, 23)\r\n\t\tself._txtbPanel.TabIndex = 1\r\n\t\t\r\n\t\t# label2\r\n\t\tself._label2.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._label2.Location = System.Drawing.Point(406, 32)\r\n\t\tself._label2.Name = \"label2\"\r\n\t\tself._label2.Size = System.Drawing.Size(100, 23)\r\n\t\tself._label2.TabIndex = 2\r\n\t\tself._label2.Text = \"Button Name:\"\r\n\t\tself._label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\r\n\t\t# label4\r\n\t\tself._label4.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._label4.Location = System.Drawing.Point(19, 19)\r\n\t\tself._label4.Name = \"label4\"\r\n\t\tself._label4.Size = System.Drawing.Size(100, 23)\r\n\t\tself._label4.TabIndex = 4\r\n\t\tself._label4.Text = \"Select A File:\"\r\n\t\tself._label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\r\n\t\t# cbbSourceFile\r\n\t\tself._cbbSourceFile.FormattingEnabled = True\r\n\t\tself._cbbSourceFile.Location = System.Drawing.Point(125, 19)\r\n\t\tself._cbbSourceFile.Name = \"cbbSourceFile\"\r\n\t\tself._cbbSourceFile.Size = System.Drawing.Size(205, 21)\r\n\t\tself._cbbSourceFile.TabIndex = 5\r\n\t\tself._cbbSourceFile.Items.AddRange(System.Array[System.Object](typeSource))\r\n\t\tself._cbbSourceFile.SelectedIndex = 0\r\n\t\t\r\n\t\t# label5\r\n\t\tself._label5.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._label5.Location = System.Drawing.Point(19, 22)\r\n\t\tself._label5.Name = \"label5\"\r\n\t\tself._label5.Size = System.Drawing.Size(69, 23)\r\n\t\tself._label5.TabIndex = 6\r\n\t\tself._label5.Text = \"Icon Path:\"\r\n\t\tself._label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\r\n\t\t# txtbIconPath\r\n\t\tself._txtbIconPath.Location = System.Drawing.Point(125, 22)\r\n\t\tself._txtbIconPath.Name = \"txtbIconPath\"\r\n\t\tself._txtbIconPath.Size = System.Drawing.Size(501, 23)\r\n\t\tself._txtbIconPath.TabIndex = 7\r\n\t\t\r\n\t\t# btnSelIcon\r\n\t\tself._btnSelIcon.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\tself._btnSelIcon.Location = System.Drawing.Point(632, 22)\r\n\t\tself._btnSelIcon.Name = \"btnSelIcon\"\r\n\t\tself._btnSelIcon.Size = System.Drawing.Size(86, 23)\r\n\t\tself._btnSelIcon.TabIndex = 9\r\n\t\tself._btnSelIcon.Text = \"Browse\"\r\n\t\tself._btnSelIcon.UseVisualStyleBackColor = False\r\n\t\tself._btnSelIcon.Click += self.BtnSelIconClick\r\n\t\t\r\n\t\t# btnCancel\r\n\t\tself._btnCancel.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\tself._btnCancel.Location = System.Drawing.Point(418, 212)\r\n\t\tself._btnCancel.Name = \"btnCancel\"\r\n\t\tself._btnCancel.Size = System.Drawing.Size(114, 30)\r\n\t\tself._btnCancel.TabIndex = 10\r\n\t\tself._btnCancel.Text = \"Cancel\"\r\n\t\tself._btnCancel.UseVisualStyleBackColor = False\r\n\t\tself._btnCancel.Click += self.BtnCancelClick\r\n\t\t\r\n\t\t# btnOk\r\n\t\tself._btnOk.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\tself._btnOk.Location = System.Drawing.Point(538, 212)\r\n\t\tself._btnOk.Name = \"btnOk\"\r\n\t\tself._btnOk.Size = System.Drawing.Size(114, 30)\r\n\t\tself._btnOk.TabIndex = 11\r\n\t\tself._btnOk.Text = \"OK\"\r\n\t\tself._btnOk.UseVisualStyleBackColor = False\r\n\t\tself._btnOk.Click += self.BtnOkClick\r\n\t\t\r\n\t\t# txtbBtn\r\n\t\tself._txtbBtn.Location = System.Drawing.Point(512, 32)\r\n\t\tself._txtbBtn.Name = \"txtbBtn\"\r\n\t\tself._txtbBtn.Size = System.Drawing.Size(205, 23)\r\n\t\tself._txtbBtn.TabIndex = 12\r\n\t\t# \r\n\t\t# groupBox1\r\n\t\t# \r\n\t\tself._groupBox1.Controls.Add(self._label5)\r\n\t\tself._groupBox1.Controls.Add(self._txtbIconPath)\r\n\t\tself._groupBox1.Controls.Add(self._btnSelIcon)\r\n\t\tself._groupBox1.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._groupBox1.Location = System.Drawing.Point(26, 146)\r\n\t\tself._groupBox1.Name = \"groupBox1\"\r\n\t\tself._groupBox1.Size = System.Drawing.Size(724, 60)\r\n\t\tself._groupBox1.TabIndex = 13\r\n\t\tself._groupBox1.TabStop = False\r\n\t\tself._groupBox1.Text = \"Icon\"\r\n\t\t# \r\n\t\t# groupBox2\r\n\t\t# \r\n\t\tself._groupBox2.Controls.Add(self._label1)\r\n\t\tself._groupBox2.Controls.Add(self._txtbPanel)\r\n\t\tself._groupBox2.Controls.Add(self._txtbBtn)\r\n\t\tself._groupBox2.Controls.Add(self._label2)\r\n\t\tself._groupBox2.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._groupBox2.Location = System.Drawing.Point(26, 12)\r\n\t\tself._groupBox2.Name = \"groupBox2\"\r\n\t\tself._groupBox2.Size = System.Drawing.Size(723, 72)\r\n\t\tself._groupBox2.TabIndex = 14\r\n\t\tself._groupBox2.TabStop = False\r\n\t\tself._groupBox2.Text = \"Button\"\r\n\t\t# \r\n\t\t# groupBox3\r\n\t\t# \r\n\t\tself._groupBox3.Controls.Add(self._txtbSourceFilePath)\r\n\t\tself._groupBox3.Controls.Add(self._label4)\r\n\t\tself._groupBox3.Controls.Add(self._cbbSourceFile)\r\n\t\tself._groupBox3.Location = System.Drawing.Point(26, 90)\r\n\t\tself._groupBox3.Name = \"groupBox3\"\r\n\t\tself._groupBox3.Size = System.Drawing.Size(724, 58)\r\n\t\tself._groupBox3.TabIndex = 15\r\n\t\tself._groupBox3.TabStop = False\r\n\t\tself._groupBox3.Text = \"Source\"\r\n\t\t\r\n\t\t# txtbSourceFilePath\r\n\t\tself._txtbSourceFilePath.Location = System.Drawing.Point(343, 19)\r\n\t\tself._txtbSourceFilePath.Name = \"txtbSourceFilePath\"\r\n\t\tself._txtbSourceFilePath.ReadOnly = True\r\n\t\tself._txtbSourceFilePath.Size = System.Drawing.Size(375, 20)\r\n\t\tself._txtbSourceFilePath.TabIndex = 0\r\n\t\t\r\n\t\t# MainForm\r\n\t\tself.BackColor = System.Drawing.SystemColors.ButtonHighlight\r\n\t\tself.ClientSize = System.Drawing.Size(757, 248)\r\n\t\tself.Controls.Add(self._groupBox3)\r\n\t\tself.Controls.Add(self._groupBox2)\r\n\t\tself.Controls.Add(self._groupBox1)\r\n\t\tself.Controls.Add(self._btnOk)\r\n\t\tself.Controls.Add(self._btnCancel)\r\n\t\tself.Font = System.Drawing.Font(\"Microsoft Sans Serif\", 8.25, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog\r\n\t\tself.Name = \"MainForm\"\r\n\t\tself.RightToLeft = System.Windows.Forms.RightToLeft.No\r\n\t\tself.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen\r\n\t\tself.Text = \"Revit Tool Setup\"\r\n\t\tself.TopMost = True\r\n\t\tself._groupBox1.ResumeLayout(False)\r\n\t\tself._groupBox1.PerformLayout()\r\n\t\tself._groupBox2.ResumeLayout(False)\r\n\t\tself._groupBox2.PerformLayout()\r\n\t\tself._groupBox3.ResumeLayout(False)\r\n\t\tself._groupBox3.PerformLayout()\r\n\t\tself.ResumeLayout(False)\r\n\r\n\tdef OnSourceFileChanged(self, sender, e):\r\n\t\tselectedType = self._cbbSourceFile.SelectedItem\r\n\t\tif selectedType == '.py':\r\n\t\t\tself._txtbSourceFilePath.Text = \"\"\r\n\t\telif selectedType in ['.dyn', '.dll']:\r\n\t\t\tdialog = System.Windows.Forms.OpenFileDialog()\r\n\t\t\tdialog.Filter = f\"{selectedType} files (*{selectedType})|*{selectedType}|All files (*.*)|*.*\"\r\n\t\t\tif dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK:\r\n\t\t\t\tself._txtbSourceFilePath.Text = dialog.FileName\r\n\r\n\tdef BtnCancelClick(self, sender, e):\r\n\t\tself.Close()\r\n\r\n\tdef BtnOkClick(self, sender, e):\r\n\t\tpanelName = self._txtbPanel.Text\r\n\t\tbuttonName = self._txtbBtn.Text\r\n\r\n\t\t# Create panel directory\r\n\t\tpanelDir = os.path.join(extTabPath, f\"{panelName}.panel\")\r\n\t\tos.makedirs(panelDir, exist_ok=True)\r\n\r\n\t\t# Create button directory inside panel directory\r\n\t\tbuttonDir = os.path.join(panelDir, f\"{buttonName}.pushbutton\")\r\n\t\tos.makedirs(buttonDir, exist_ok=True)\r\n\r\n\t\t# Update bundle.yaml in BIM3DM.tab folder\r\n\t\tbundleFile = os.path.join(extTabPath, 'bundle.yaml')\r\n\t\tpanelEntry = f\"  - {panelName}\"  # Add two leading spaces\r\n\t\tif not os.path.exists(bundleFile):\r\n\t\t\twith open(bundleFile, 'w') as file:\r\n\t\t\t\tfile.write(f\"{panelEntry}\\n\")\r\n\t\telse:\r\n\t\t\twith open(bundleFile, 'r') as file:\r\n\t\t\t\tcontent = file.readlines()\r\n\t\t\t\r\n\t\t\tif panelEntry not in content:\r\n\t\t\t\tcontent.append(f\"{panelEntry}\\n\")\r\n\t\t\t\r\n\t\t\twith open(bundleFile, 'w') as file:\r\n\t\t\t\tfile.writelines(content)\r\n\r\n\t\t# Handle file operations based on selected file type\r\n\t\tselectedType = self._cbbSourceFile.SelectedItem\r\n\t\tsourceFilePath = self._txtbSourceFilePath.Text  # Get the selected file path from the text box\r\n\r\n\t\tif selectedType == '.py':\r\n\t\t\tpyFilePath = os.path.join(buttonDir, 'script.py')\r\n\t\t\twith open(pyFilePath, 'w') as pyFile:\r\n\t\t\t\tpyFile.write(\"print('Welcome to BIM3DM')\")\r\n\t\telif selectedType == '.dyn':\r\n\t\t\tif os.path.exists(sourceFilePath):\r\n\t\t\t\tdestinationFilePath = os.path.join(buttonDir, os.path.basename(sourceFilePath))\r\n\t\t\t\tshutil.copy2(sourceFilePath, destinationFilePath)\r\n\r\n\t\t\t\t# Copy the original file and rename it to _script.dyn\r\n\t\t\t\tscriptFilePath = os.path.splitext(destinationFilePath)[0] + '_script.dyn'\r\n\t\t\t\tshutil.copy2(sourceFilePath, scriptFilePath)\r\n\t\telif selectedType == '.dll':\r\n\t\t\tif os.path.exists(sourceFilePath):\r\n\t\t\t\tdestinationFilePath = os.path.join(buttonDir, os.path.basename(sourceFilePath))\r\n\t\t\t\tshutil.copy2(sourceFilePath, destinationFilePath)\r\n\r\n\t\t# Copy the selected icon file into the pushbutton directory and rename it to icon.png\r\n\t\ticonFilePath = self._txtbIconPath.Text\r\n\t\tif os.path.exists(iconFilePath):\r\n\t\t\ticonDestPath = os.path.join(buttonDir, 'icon.png')\r\n\t\t\tshutil.copy2(iconFilePath, iconDestPath)\r\n\r\n\t\tself.Close()\r\n\r\n\tdef BtnSelIconClick(self, sender, e):\r\n\t\tdialog = System.Windows.Forms.OpenFileDialog()\r\n\t\tdialog.Filter = \"PNG files (*.png)|*.png|All files (*.*)|*.*\"\r\n\t\tif dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK:\r\n\t\t\tself._txtbIconPath.Text = dialog.FileName\r\n\r\n\r\nf = MainForm()\r\nApplication.Run(f)\r\n# OUT = f.va",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "20021fc049c547cd83276ccf71af82e7",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "57d97d6c12c24c4bb2f4aa3a17c8d48c",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8e68165a6bc64c99922d118b8144f577",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "import clr\r\nimport System\r\n \r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI import*\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import Selection\r\nfrom  Autodesk.Revit.UI.Selection import ISelectionFilter\r\n\r\nimport os\r\nimport shutil\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import*\r\n#########################################################################\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#########################################################################\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nView = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n#########################################################################\r\n\r\ntypeSource = ['.py', '.dyn', '.dll']\r\ndefaultTabPath = r'C:\\Users\\NGUYEN NGOC DUE\\AppData\\Roaming\\pyRevit\\Extensions\\BIM3DM.extension\\BIM3DM.tab'\r\n\r\nclass MainForm(System.Windows.Forms.Form):\r\n\tdef __init__(self):\r\n\t\tself.InitializeComponent()\r\n\t\tself._cbbSourceFile.SelectionChangeCommitted += self.OnSourceFileChanged\r\n\t\tself._btnSelTabPath.Click += self.BtnSelTabPathClick\r\n\t\tself._btnSelIcon.Click += self.BtnSelIconClick\r\n\r\n\tdef InitializeComponent(self):\r\n\t\t\t\t\tself._labelExtTab = System.Windows.Forms.Label()\r\n\t\t\t\t\tself._txtbExtTabPath = System.Windows.Forms.TextBox()\r\n\t\t\t\t\tself._btnSelTabPath = System.Windows.Forms.Button()\r\n\t\t\t\t\tself._label1 = System.Windows.Forms.Label()\r\n\t\t\t\t\tself._txtbPanel = System.Windows.Forms.TextBox()\r\n\t\t\t\t\tself._label2 = System.Windows.Forms.Label()\r\n\t\t\t\t\tself._label4 = System.Windows.Forms.Label()\r\n\t\t\t\t\tself._cbbSourceFile = System.Windows.Forms.ComboBox()\r\n\t\t\t\t\tself._label5 = System.Windows.Forms.Label()\r\n\t\t\t\t\tself._txtbIconPath = System.Windows.Forms.TextBox()\r\n\t\t\t\t\tself._btnSelIcon = System.Windows.Forms.Button()\r\n\t\t\t\t\tself._btnCancel = System.Windows.Forms.Button()\r\n\t\t\t\t\tself._btnOk = System.Windows.Forms.Button()\r\n\t\t\t\t\tself._txtbBtn = System.Windows.Forms.TextBox()\r\n\t\t\t\t\tself._groupBox1 = System.Windows.Forms.GroupBox()\r\n\t\t\t\t\tself._groupBox2 = System.Windows.Forms.GroupBox()\r\n\t\t\t\t\tself._groupBox3 = System.Windows.Forms.GroupBox()\r\n\t\t\t\t\tself._txtbSourceFilePath = System.Windows.Forms.TextBox()\r\n\t\t\t\t\tself._groupBox1.SuspendLayout()\r\n\t\t\t\t\tself._groupBox2.SuspendLayout()\r\n\t\t\t\t\tself._groupBox3.SuspendLayout()\r\n\t\t\t\t\tself.SuspendLayout()\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# labelExtTab\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._labelExtTab.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._labelExtTab.Location = System.Drawing.Point(33, 18)\r\n\t\t\t\t\tself._labelExtTab.Name = \"labelExtTab\"\r\n\t\t\t\t\tself._labelExtTab.Size = System.Drawing.Size(112, 23)\r\n\t\t\t\t\tself._labelExtTab.TabIndex = 0\r\n\t\t\t\t\tself._labelExtTab.Text = \"Extension Tab:\"\r\n\t\t\t\t\tself._labelExtTab.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# txtbExtTabPath\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._txtbExtTabPath.Location = System.Drawing.Point(151, 20)\r\n\t\t\t\t\tself._txtbExtTabPath.Name = \"txtbExtTabPath\"\r\n\t\t\t\t\tself._txtbExtTabPath.Size = System.Drawing.Size(501, 20)\r\n\t\t\t\t\tself._txtbExtTabPath.TabIndex = 1\r\n\t\t\t\t\tself._txtbExtTabPath.Text = \"defaultTabPath\"\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# btnSelTabPath\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._btnSelTabPath.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\t\t\t\tself._btnSelTabPath.Font = System.Drawing.Font(\"Microsoft Sans Serif\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._btnSelTabPath.Location = System.Drawing.Point(658, 18)\r\n\t\t\t\t\tself._btnSelTabPath.Name = \"btnSelTabPath\"\r\n\t\t\t\t\tself._btnSelTabPath.Size = System.Drawing.Size(86, 23)\r\n\t\t\t\t\tself._btnSelTabPath.TabIndex = 2\r\n\t\t\t\t\tself._btnSelTabPath.Text = \"Browse\"\r\n\t\t\t\t\tself._btnSelTabPath.UseVisualStyleBackColor = False\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# label1\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._label1.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._label1.Location = System.Drawing.Point(19, 30)\r\n\t\t\t\t\tself._label1.Name = \"label1\"\r\n\t\t\t\t\tself._label1.Size = System.Drawing.Size(100, 23)\r\n\t\t\t\t\tself._label1.TabIndex = 0\r\n\t\t\t\t\tself._label1.Text = \"Panel Name:\"\r\n\t\t\t\t\tself._label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# txtbPanel\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._txtbPanel.Location = System.Drawing.Point(125, 30)\r\n\t\t\t\t\tself._txtbPanel.Name = \"txtbPanel\"\r\n\t\t\t\t\tself._txtbPanel.Size = System.Drawing.Size(205, 23)\r\n\t\t\t\t\tself._txtbPanel.TabIndex = 1\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# label2\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._label2.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._label2.Location = System.Drawing.Point(392, 30)\r\n\t\t\t\t\tself._label2.Name = \"label2\"\r\n\t\t\t\t\tself._label2.Size = System.Drawing.Size(100, 23)\r\n\t\t\t\t\tself._label2.TabIndex = 2\r\n\t\t\t\t\tself._label2.Text = \"Button Name:\"\r\n\t\t\t\t\tself._label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# label4\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._label4.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._label4.Location = System.Drawing.Point(19, 30)\r\n\t\t\t\t\tself._label4.Name = \"label4\"\r\n\t\t\t\t\tself._label4.Size = System.Drawing.Size(100, 23)\r\n\t\t\t\t\tself._label4.TabIndex = 0\r\n\t\t\t\t\tself._label4.Text = \"Select A File:\"\r\n\t\t\t\t\tself._label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# cbbSourceFile\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._cbbSourceFile.FormattingEnabled = True\r\n\t\t\t\t\tself._cbbSourceFile.Location = System.Drawing.Point(125, 30)\r\n\t\t\t\t\tself._cbbSourceFile.Name = \"cbbSourceFile\"\r\n\t\t\t\t\tself._cbbSourceFile.Size = System.Drawing.Size(205, 24)\r\n\t\t\t\t\tself._cbbSourceFile.TabIndex = 1\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# label5\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._label5.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._label5.Location = System.Drawing.Point(19, 30)\r\n\t\t\t\t\tself._label5.Name = \"label5\"\r\n\t\t\t\t\tself._label5.Size = System.Drawing.Size(100, 23)\r\n\t\t\t\t\tself._label5.TabIndex = 0\r\n\t\t\t\t\tself._label5.Text = \"Icon Path:\"\r\n\t\t\t\t\tself._label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# txtbIconPath\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._txtbIconPath.Location = System.Drawing.Point(125, 30)\r\n\t\t\t\t\tself._txtbIconPath.Name = \"txtbIconPath\"\r\n\t\t\t\t\tself._txtbIconPath.Size = System.Drawing.Size(501, 23)\r\n\t\t\t\t\tself._txtbIconPath.TabIndex = 1\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# btnSelIcon\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._btnSelIcon.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\t\t\t\tself._btnSelIcon.Location = System.Drawing.Point(632, 30)\r\n\t\t\t\t\tself._btnSelIcon.Name = \"btnSelIcon\"\r\n\t\t\t\t\tself._btnSelIcon.Size = System.Drawing.Size(86, 23)\r\n\t\t\t\t\tself._btnSelIcon.TabIndex = 2\r\n\t\t\t\t\tself._btnSelIcon.Text = \"Browse\"\r\n\t\t\t\t\tself._btnSelIcon.UseVisualStyleBackColor = False\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# btnCancel\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._btnCancel.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\t\t\t\tself._btnCancel.Location = System.Drawing.Point(498, 312)\r\n\t\t\t\t\tself._btnCancel.Name = \"btnCancel\"\r\n\t\t\t\t\tself._btnCancel.Size = System.Drawing.Size(114, 30)\r\n\t\t\t\t\tself._btnCancel.TabIndex = 6\r\n\t\t\t\t\tself._btnCancel.Text = \"Cancel\"\r\n\t\t\t\t\tself._btnCancel.UseVisualStyleBackColor = False\r\n\t\t\t\t\tself._btnCancel.Click += self.BtnCancelClick\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# btnOk\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._btnOk.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\t\t\t\tself._btnOk.Location = System.Drawing.Point(628, 312)\r\n\t\t\t\t\tself._btnOk.Name = \"btnOk\"\r\n\t\t\t\t\tself._btnOk.Size = System.Drawing.Size(114, 30)\r\n\t\t\t\t\tself._btnOk.TabIndex = 7\r\n\t\t\t\t\tself._btnOk.Text = \"OK\"\r\n\t\t\t\t\tself._btnOk.UseVisualStyleBackColor = False\r\n\t\t\t\t\tself._btnOk.Click += self.BtnOkClick\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# txtbBtn\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._txtbBtn.Location = System.Drawing.Point(512, 30)\r\n\t\t\t\t\tself._txtbBtn.Name = \"txtbBtn\"\r\n\t\t\t\t\tself._txtbBtn.Size = System.Drawing.Size(204, 23)\r\n\t\t\t\t\tself._txtbBtn.TabIndex = 3\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# groupBox1\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._groupBox1.Controls.Add(self._label5)\r\n\t\t\t\t\tself._groupBox1.Controls.Add(self._txtbIconPath)\r\n\t\t\t\t\tself._groupBox1.Controls.Add(self._btnSelIcon)\r\n\t\t\t\t\tself._groupBox1.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._groupBox1.Location = System.Drawing.Point(26, 234)\r\n\t\t\t\t\tself._groupBox1.Name = \"groupBox1\"\r\n\t\t\t\t\tself._groupBox1.Size = System.Drawing.Size(724, 72)\r\n\t\t\t\t\tself._groupBox1.TabIndex = 5\r\n\t\t\t\t\tself._groupBox1.TabStop = False\r\n\t\t\t\t\tself._groupBox1.Text = \"Icon\"\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# groupBox2\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._groupBox2.Controls.Add(self._label1)\r\n\t\t\t\t\tself._groupBox2.Controls.Add(self._txtbPanel)\r\n\t\t\t\t\tself._groupBox2.Controls.Add(self._label2)\r\n\t\t\t\t\tself._groupBox2.Controls.Add(self._txtbBtn)\r\n\t\t\t\t\tself._groupBox2.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._groupBox2.Location = System.Drawing.Point(26, 60)\r\n\t\t\t\t\tself._groupBox2.Name = \"groupBox2\"\r\n\t\t\t\t\tself._groupBox2.Size = System.Drawing.Size(724, 72)\r\n\t\t\t\t\tself._groupBox2.TabIndex = 3\r\n\t\t\t\t\tself._groupBox2.TabStop = False\r\n\t\t\t\t\tself._groupBox2.Text = \"Button\"\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# groupBox3\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._groupBox3.Controls.Add(self._txtbSourceFilePath)\r\n\t\t\t\t\tself._groupBox3.Controls.Add(self._label4)\r\n\t\t\t\t\tself._groupBox3.Controls.Add(self._cbbSourceFile)\r\n\t\t\t\t\tself._groupBox3.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself._groupBox3.Location = System.Drawing.Point(26, 140)\r\n\t\t\t\t\tself._groupBox3.Name = \"groupBox3\"\r\n\t\t\t\t\tself._groupBox3.Size = System.Drawing.Size(724, 88)\r\n\t\t\t\t\tself._groupBox3.TabIndex = 4\r\n\t\t\t\t\tself._groupBox3.TabStop = False\r\n\t\t\t\t\tself._groupBox3.Text = \"Source\"\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# txtbSourceFilePath\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself._txtbSourceFilePath.Location = System.Drawing.Point(125, 59)\r\n\t\t\t\t\tself._txtbSourceFilePath.Name = \"txtbSourceFilePath\"\r\n\t\t\t\t\tself._txtbSourceFilePath.ReadOnly = True\r\n\t\t\t\t\tself._txtbSourceFilePath.Size = System.Drawing.Size(593, 23)\r\n\t\t\t\t\tself._txtbSourceFilePath.TabIndex = 2\r\n\t\t\t\t\t# \r\n\t\t\t\t\t# MainForm\r\n\t\t\t\t\t# \r\n\t\t\t\t\tself.BackColor = System.Drawing.SystemColors.ButtonHighlight\r\n\t\t\t\t\tself.ClientSize = System.Drawing.Size(780, 353)\r\n\t\t\t\t\tself.Controls.Add(self._btnCancel)\r\n\t\t\t\t\tself.Controls.Add(self._btnOk)\r\n\t\t\t\t\tself.Controls.Add(self._groupBox1)\r\n\t\t\t\t\tself.Controls.Add(self._groupBox2)\r\n\t\t\t\t\tself.Controls.Add(self._groupBox3)\r\n\t\t\t\t\tself.Controls.Add(self._labelExtTab)\r\n\t\t\t\t\tself.Controls.Add(self._txtbExtTabPath)\r\n\t\t\t\t\tself.Controls.Add(self._btnSelTabPath)\r\n\t\t\t\t\tself.Font = System.Drawing.Font(\"Microsoft Sans Serif\", 8.25, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\t\t\t\tself.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog\r\n\t\t\t\t\tself.Name = \"MainForm\"\r\n\t\t\t\t\tself.RightToLeft = System.Windows.Forms.RightToLeft.No\r\n\t\t\t\t\tself.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen\r\n\t\t\t\t\tself.Text = \"Revit Tool Setup\"\r\n\t\t\t\t\tself.TopMost = True\r\n\t\t\t\t\tself._groupBox1.ResumeLayout(False)\r\n\t\t\t\t\tself._groupBox1.PerformLayout()\r\n\t\t\t\t\tself._groupBox2.ResumeLayout(False)\r\n\t\t\t\t\tself._groupBox2.PerformLayout()\r\n\t\t\t\t\tself._groupBox3.ResumeLayout(False)\r\n\t\t\t\t\tself._groupBox3.PerformLayout()\r\n\t\t\t\t\tself.ResumeLayout(False)\r\n\t\t\t\t\tself.PerformLayout()\r\n\r\n\tdef OnSourceFileChanged(self, sender, e):\r\n#        selectedType = self._cbbSourceFile.SelectedItem\r\n#        if selectedType == '.py':\r\n#            self._txtbSourceFilePath.Text = \"\"\r\n#        elif selectedType in ['.dyn', '.dll']:\r\n#            dialog = System.Windows.Forms.OpenFileDialog()\r\n#            dialog.Filter = f\"{selectedType} files (*{selectedType})|*{selectedType}|All files (*.*)|*.*\"\r\n#            if dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK:\r\n#                self._txtbSourceFilePath.Text = dialog.FileName\r\n\t\tpass\r\n\r\n\tdef BtnSelTabPathClick(self, sender, e):\r\n#        dialog = System.Windows.Forms.FolderBrowserDialog()\r\n#        if dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK:\r\n#            self._txtbExtTabPath.Text = dialog.SelectedPath\r\n\t\tpass\r\n\r\n\tdef BtnCancelClick(self, sender, e):\r\n\t\tself.Close()\r\n\r\n\tdef BtnOkClick(self, sender, e):\r\n#        panelName = self._txtbPanel.Text\r\n#        buttonName = self._txtbBtn.Text\r\n#        extTabPath = self._txtbExtTabPath.Text\r\n#\r\n#        # Create panel directory\r\n#        panelDir = os.path.join(extTabPath, f\"{panelName}.panel\")\r\n#        os.makedirs(panelDir, exist_ok=True)\r\n#\r\n#        # Create button directory inside panel directory\r\n#        buttonDir = os.path.join(panelDir, f\"{buttonName}.pushbutton\")\r\n#        os.makedirs(buttonDir, exist_ok=True)\r\n#\r\n#        # Update bundle.yaml in BIM3DM.tab folder\r\n#        bundleFile = os.path.join(extTabPath, 'bundle.yaml')\r\n#        panelEntry = f\"  - {panelName}\"  # Add two leading spaces\r\n#        if not os.path.exists(bundleFile):\r\n#            with open(bundleFile, 'w') as file:\r\n#                file.write(f\"{panelEntry}\\n\")\r\n#        else:\r\n#            with open(bundleFile, 'r') as file:\r\n#                content = file.readlines()\r\n#            \r\n#            if panelEntry not in content:\r\n#                content.append(f\"{panelEntry}\\n\")\r\n#            \r\n#            with open(bundleFile, 'w') as file:\r\n#                file.writelines(content)\r\n#\r\n#        # Handle file operations based on selected file type\r\n#        selectedType = self._cbbSourceFile.SelectedItem\r\n#        sourceFilePath = self._txtbSourceFilePath.Text  # Get the selected file path from the text box\r\n#\r\n#        if selectedType == '.py':\r\n#            pyFilePath = os.path.join(buttonDir, 'script.py')\r\n#            with open(pyFilePath, 'w') as pyFile:\r\n#                pyFile.write(\"print('Welcome to BIM3DM')\")\r\n#        elif selectedType == '.dyn':\r\n#            if os.path.exists(sourceFilePath):\r\n#                destinationFilePath = os.path.join(buttonDir, os.path.basename(sourceFilePath))\r\n#                shutil.copy2(sourceFilePath, destinationFilePath)\r\n#\r\n#                # Copy the original file and rename it to _script.dyn\r\n#                scriptFilePath = os.path.splitext(destinationFilePath)[0] + '_script.dyn'\r\n#                shutil.copy2(sourceFilePath, scriptFilePath)\r\n#        elif selectedType == '.dll':\r\n#            if os.path.exists(sourceFilePath):\r\n#                destinationFilePath = os.path.join(buttonDir, os.path.basename(sourceFilePath))\r\n#                shutil.copy2(sourceFilePath, destinationFilePath)\r\n#\r\n#        # Copy the selected icon file into the pushbutton directory and rename it to icon.png\r\n#        iconFilePath = self._txtbIconPath.Text\r\n#        if os.path.exists(iconFilePath):\r\n#            iconDestPath = os.path.join(buttonDir, 'icon.png')\r\n#            shutil.copy2(iconFilePath, iconDestPath)\r\n\r\n\t\tself.Close()\r\n\r\n\tdef BtnSelIconClick(self, sender, e):\r\n#        dialog = System.Windows.Forms.OpenFileDialog()\r\n#        dialog.Filter = \"PNG files (*.png)|*.png|All files (*.*)|*.*\"\r\n#        if dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK:\r\n#            self._txtbIconPath.Text = dialog.FileName\r\n\t\tpass\r\nf = MainForm()\r\nApplication.Run(f)\r\n# OUT = f.va",
+      "Engine": "IronPython2",
+      "EngineName": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "636469aa8bd0444c887b5f01e23c7200",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "0cca0ef67476409eb25f0632361fc379",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bc5e48166e554598b08aa144ae6811ff",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e1cc4b2295d84151bb3c072f91aaddd9",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "import clr\r\nimport System\r\n \r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI import*\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import Selection\r\nfrom  Autodesk.Revit.UI.Selection import ISelectionFilter\r\n\r\nimport os\r\nimport shutil\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import*\r\n#########################################################################\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#########################################################################\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nView = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n#########################################################################\r\n\r\ntypeSource = ['.py', '.dyn', '.dll']\r\nusername = os.getlogin()\r\ndefaultTabPath = rf'C:\\Users\\{username}\\AppData\\Roaming\\pyRevit\\Extensions\\pyBIM3DM.extension\\pyBIM3DM.tab'\r\ntypeSource = ['.py', '.dyn', '.dll']\r\n\r\nclass MainForm(System.Windows.Forms.Form):\r\n\tdef __init__(self):\r\n\t\tself.InitializeComponent()\r\n\t\tself._cbbSourceFile.SelectionChangeCommitted += self.OnSourceFileChanged\r\n\t\tself._btnSelTabPath.Click += self.BtnSelTabPathClick\r\n\t\tself._btnSelIcon.Click += self.BtnSelIconClick\r\n\r\n\tdef InitializeComponent(self):\r\n\t\tself._labelExtTab = System.Windows.Forms.Label()\r\n\t\tself._txtbExtTabPath = System.Windows.Forms.TextBox()\r\n\t\tself._btnSelTabPath = System.Windows.Forms.Button()\r\n\t\tself._label1 = System.Windows.Forms.Label()\r\n\t\tself._txtbPanel = System.Windows.Forms.TextBox()\r\n\t\tself._label2 = System.Windows.Forms.Label()\r\n\t\tself._label4 = System.Windows.Forms.Label()\r\n\t\tself._cbbSourceFile = System.Windows.Forms.ComboBox()\r\n\t\tself._label5 = System.Windows.Forms.Label()\r\n\t\tself._txtbIconPath = System.Windows.Forms.TextBox()\r\n\t\tself._btnSelIcon = System.Windows.Forms.Button()\r\n\t\tself._btnCancel = System.Windows.Forms.Button()\r\n\t\tself._btnOk = System.Windows.Forms.Button()\r\n\t\tself._txtbBtn = System.Windows.Forms.TextBox()\r\n\t\tself._groupBox1 = System.Windows.Forms.GroupBox()\r\n\t\tself._groupBox2 = System.Windows.Forms.GroupBox()\r\n\t\tself._groupBox3 = System.Windows.Forms.GroupBox()\r\n\t\tself._txtbSourceFilePath = System.Windows.Forms.TextBox()\r\n\t\tself._groupBox1.SuspendLayout()\r\n\t\tself._groupBox2.SuspendLayout()\r\n\t\tself._groupBox3.SuspendLayout()\r\n\t\tself.SuspendLayout()\r\n\t\t# \r\n\t\t# labelExtTab\r\n\t\t# \r\n\t\tself._labelExtTab.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._labelExtTab.Location = System.Drawing.Point(33, 18)\r\n\t\tself._labelExtTab.Name = \"labelExtTab\"\r\n\t\tself._labelExtTab.Size = System.Drawing.Size(112, 23)\r\n\t\tself._labelExtTab.TabIndex = 0\r\n\t\tself._labelExtTab.Text = \"Extension Tab:\"\r\n\t\tself._labelExtTab.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t# \r\n\t\t# txtbExtTabPath\r\n\t\t# \r\n\t\tself._txtbExtTabPath.Location = System.Drawing.Point(151, 20)\r\n\t\tself._txtbExtTabPath.Name = \"txtbExtTabPath\"\r\n\t\tself._txtbExtTabPath.Size = System.Drawing.Size(501, 20)\r\n\t\tself._txtbExtTabPath.TabIndex = 1\r\n\t\tself._txtbExtTabPath.Text = defaultTabPath\r\n\t\t# \r\n\t\t# btnSelTabPath\r\n\t\t# \r\n\t\tself._btnSelTabPath.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\tself._btnSelTabPath.Font = System.Drawing.Font(\"Microsoft Sans Serif\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._btnSelTabPath.Location = System.Drawing.Point(658, 18)\r\n\t\tself._btnSelTabPath.Name = \"btnSelTabPath\"\r\n\t\tself._btnSelTabPath.Size = System.Drawing.Size(86, 23)\r\n\t\tself._btnSelTabPath.TabIndex = 2\r\n\t\tself._btnSelTabPath.Text = \"Browse\"\r\n\t\tself._btnSelTabPath.UseVisualStyleBackColor = False\r\n\t\t# \r\n\t\t# label1\r\n\t\t# \r\n\t\tself._label1.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._label1.Location = System.Drawing.Point(19, 30)\r\n\t\tself._label1.Name = \"label1\"\r\n\t\tself._label1.Size = System.Drawing.Size(100, 23)\r\n\t\tself._label1.TabIndex = 0\r\n\t\tself._label1.Text = \"Panel Name:\"\r\n\t\tself._label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t# \r\n\t\t# txtbPanel\r\n\t\t# \r\n\t\tself._txtbPanel.Location = System.Drawing.Point(125, 30)\r\n\t\tself._txtbPanel.Name = \"txtbPanel\"\r\n\t\tself._txtbPanel.Size = System.Drawing.Size(205, 23)\r\n\t\tself._txtbPanel.TabIndex = 1\r\n\t\t# \r\n\t\t# label2\r\n\t\t# \r\n\t\tself._label2.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._label2.Location = System.Drawing.Point(392, 30)\r\n\t\tself._label2.Name = \"label2\"\r\n\t\tself._label2.Size = System.Drawing.Size(100, 23)\r\n\t\tself._label2.TabIndex = 2\r\n\t\tself._label2.Text = \"Button Name:\"\r\n\t\tself._label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t# \r\n\t\t# label4\r\n\t\t# \r\n\t\tself._label4.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._label4.Location = System.Drawing.Point(19, 30)\r\n\t\tself._label4.Name = \"label4\"\r\n\t\tself._label4.Size = System.Drawing.Size(100, 23)\r\n\t\tself._label4.TabIndex = 0\r\n\t\tself._label4.Text = \"Select A File:\"\r\n\t\tself._label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t# \r\n\t\t# cbbSourceFile\r\n\t\t# \r\n\t\tself._cbbSourceFile.FormattingEnabled = True\r\n\t\tself._cbbSourceFile.Location = System.Drawing.Point(125, 30)\r\n\t\tself._cbbSourceFile.Name = \"cbbSourceFile\"\r\n\t\tself._cbbSourceFile.Size = System.Drawing.Size(205, 24)\r\n\t\tself._cbbSourceFile.Items.AddRange(System.Array[System.Object](typeSource))\r\n\t\tself._cbbSourceFile.SelectedIndex = 0\r\n\t\t# \r\n\t\t# label5\r\n\t\t# \r\n\t\tself._label5.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._label5.Location = System.Drawing.Point(19, 30)\r\n\t\tself._label5.Name = \"label5\"\r\n\t\tself._label5.Size = System.Drawing.Size(100, 23)\r\n\t\tself._label5.TabIndex = 0\r\n\t\tself._label5.Text = \"Icon Path:\"\r\n\t\tself._label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft\r\n\t\t# \r\n\t\t# txtbIconPath\r\n\t\t# \r\n\t\tself._txtbIconPath.Location = System.Drawing.Point(125, 30)\r\n\t\tself._txtbIconPath.Name = \"txtbIconPath\"\r\n\t\tself._txtbIconPath.Size = System.Drawing.Size(501, 23)\r\n\t\tself._txtbIconPath.TabIndex = 1\r\n\t\t# \r\n\t\t# btnSelIcon\r\n\t\t# \r\n\t\tself._btnSelIcon.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\tself._btnSelIcon.Location = System.Drawing.Point(632, 30)\r\n\t\tself._btnSelIcon.Name = \"btnSelIcon\"\r\n\t\tself._btnSelIcon.Size = System.Drawing.Size(86, 23)\r\n\t\tself._btnSelIcon.TabIndex = 2\r\n\t\tself._btnSelIcon.Text = \"Browse\"\r\n\t\tself._btnSelIcon.UseVisualStyleBackColor = False\r\n\t\t# \r\n\t\t# btnCancel\r\n\t\t# \r\n\t\tself._btnCancel.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\tself._btnCancel.Location = System.Drawing.Point(498, 312)\r\n\t\tself._btnCancel.Name = \"btnCancel\"\r\n\t\tself._btnCancel.Size = System.Drawing.Size(114, 30)\r\n\t\tself._btnCancel.TabIndex = 6\r\n\t\tself._btnCancel.Text = \"Cancel\"\r\n\t\tself._btnCancel.UseVisualStyleBackColor = False\r\n\t\tself._btnCancel.Click += self.BtnCancelClick\r\n\t\t# \r\n\t\t# btnOk\r\n\t\t# \r\n\t\tself._btnOk.BackColor = System.Drawing.SystemColors.ButtonFace\r\n\t\tself._btnOk.Location = System.Drawing.Point(628, 312)\r\n\t\tself._btnOk.Name = \"btnOk\"\r\n\t\tself._btnOk.Size = System.Drawing.Size(114, 30)\r\n\t\tself._btnOk.TabIndex = 7\r\n\t\tself._btnOk.Text = \"OK\"\r\n\t\tself._btnOk.UseVisualStyleBackColor = False\r\n\t\tself._btnOk.Click += self.BtnOkClick\r\n\t\t# \r\n\t\t# txtbBtn\r\n\t\t# \r\n\t\tself._txtbBtn.Location = System.Drawing.Point(512, 30)\r\n\t\tself._txtbBtn.Name = \"txtbBtn\"\r\n\t\tself._txtbBtn.Size = System.Drawing.Size(204, 23)\r\n\t\tself._txtbBtn.TabIndex = 3\r\n\t\t# \r\n\t\t# groupBox1\r\n\t\t# \r\n\t\tself._groupBox1.Controls.Add(self._label5)\r\n\t\tself._groupBox1.Controls.Add(self._txtbIconPath)\r\n\t\tself._groupBox1.Controls.Add(self._btnSelIcon)\r\n\t\tself._groupBox1.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._groupBox1.Location = System.Drawing.Point(26, 234)\r\n\t\tself._groupBox1.Name = \"groupBox1\"\r\n\t\tself._groupBox1.Size = System.Drawing.Size(724, 72)\r\n\t\tself._groupBox1.TabIndex = 5\r\n\t\tself._groupBox1.TabStop = False\r\n\t\tself._groupBox1.Text = \"Icon\"\r\n\t\t# \r\n\t\t# groupBox2\r\n\t\t# \r\n\t\tself._groupBox2.Controls.Add(self._label1)\r\n\t\tself._groupBox2.Controls.Add(self._txtbPanel)\r\n\t\tself._groupBox2.Controls.Add(self._label2)\r\n\t\tself._groupBox2.Controls.Add(self._txtbBtn)\r\n\t\tself._groupBox2.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._groupBox2.Location = System.Drawing.Point(26, 60)\r\n\t\tself._groupBox2.Name = \"groupBox2\"\r\n\t\tself._groupBox2.Size = System.Drawing.Size(724, 72)\r\n\t\tself._groupBox2.TabIndex = 3\r\n\t\tself._groupBox2.TabStop = False\r\n\t\tself._groupBox2.Text = \"Button\"\r\n\t\t# \r\n\t\t# groupBox3\r\n\t\t# \r\n\t\tself._groupBox3.Controls.Add(self._txtbSourceFilePath)\r\n\t\tself._groupBox3.Controls.Add(self._label4)\r\n\t\tself._groupBox3.Controls.Add(self._cbbSourceFile)\r\n\t\tself._groupBox3.Font = System.Drawing.Font(\"Tahoma\", 9.75, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself._groupBox3.Location = System.Drawing.Point(26, 140)\r\n\t\tself._groupBox3.Name = \"groupBox3\"\r\n\t\tself._groupBox3.Size = System.Drawing.Size(724, 88)\r\n\t\tself._groupBox3.TabIndex = 4\r\n\t\tself._groupBox3.TabStop = False\r\n\t\tself._groupBox3.Text = \"Source\"\r\n\t\t# \r\n\t\t# txtbSourceFilePath\r\n\t\t# \r\n\t\tself._txtbSourceFilePath.Location = System.Drawing.Point(125, 59)\r\n\t\tself._txtbSourceFilePath.Name = \"txtbSourceFilePath\"\r\n\t\tself._txtbSourceFilePath.ReadOnly = True\r\n\t\tself._txtbSourceFilePath.Size = System.Drawing.Size(593, 23)\r\n\t\tself._txtbSourceFilePath.TabIndex = 2\r\n\t\t# \r\n\t\t# MainForm\r\n\t\t# \r\n\t\tself.BackColor = System.Drawing.SystemColors.ButtonHighlight\r\n\t\tself.ClientSize = System.Drawing.Size(780, 353)\r\n\t\tself.Controls.Add(self._btnCancel)\r\n\t\tself.Controls.Add(self._btnOk)\r\n\t\tself.Controls.Add(self._groupBox1)\r\n\t\tself.Controls.Add(self._groupBox2)\r\n\t\tself.Controls.Add(self._groupBox3)\r\n\t\tself.Controls.Add(self._labelExtTab)\r\n\t\tself.Controls.Add(self._txtbExtTabPath)\r\n\t\tself.Controls.Add(self._btnSelTabPath)\r\n\t\tself.Font = System.Drawing.Font(\"Microsoft Sans Serif\", 8.25, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0)\r\n\t\tself.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog\r\n\t\tself.Name = \"MainForm\"\r\n\t\tself.RightToLeft = System.Windows.Forms.RightToLeft.No\r\n\t\tself.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen\r\n\t\tself.Text = \"Revit Tool Setup\"\r\n\t\tself.TopMost = True\r\n\t\tself._groupBox1.ResumeLayout(False)\r\n\t\tself._groupBox1.PerformLayout()\r\n\t\tself._groupBox2.ResumeLayout(False)\r\n\t\tself._groupBox2.PerformLayout()\r\n\t\tself._groupBox3.ResumeLayout(False)\r\n\t\tself._groupBox3.PerformLayout()\r\n\t\tself.ResumeLayout(False)\r\n\t\tself.PerformLayout()\r\n\r\n\tdef OnSourceFileChanged(self, sender, e):\r\n\t\tselectedType = self._cbbSourceFile.SelectedItem\r\n\t\tif selectedType == '.py':\r\n\t\t\tself._txtbSourceFilePath.Text = \"\"\r\n\t\telif selectedType in ['.dyn', '.dll']:\r\n\t\t\tdialog = System.Windows.Forms.OpenFileDialog()\r\n\t\t\tdialog.Filter = f\"{selectedType} files (*{selectedType})|*{selectedType}|All files (*.*)|*.*\"\r\n\t\t\tif dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK:\r\n\t\t\t\tself._txtbSourceFilePath.Text = dialog.FileName\r\n\r\n\tdef BtnSelTabPathClick(self, sender, e):\r\n\t\tdialog = System.Windows.Forms.FolderBrowserDialog()\r\n\t\tif dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK:\r\n\t\t\tself._txtbExtTabPath.Text = dialog.SelectedPath\r\n\r\n\tdef BtnCancelClick(self, sender, e):\r\n\t\tself.Close()\r\n\r\n\tdef BtnOkClick(self, sender, e):\r\n\t\tpanelName = self._txtbPanel.Text\r\n\t\tbuttonName = self._txtbBtn.Text\r\n\t\textTabPath = self._txtbExtTabPath.Text\r\n\r\n\t\t# Create panel directory\r\n\t\tpanelDir = os.path.join(extTabPath, f\"{panelName}.panel\")\r\n\t\tos.makedirs(panelDir, exist_ok=True)\r\n\r\n\t\t# Create button directory inside panel directory\r\n\t\tbuttonDir = os.path.join(panelDir, f\"{buttonName}.pushbutton\")\r\n\t\tos.makedirs(buttonDir, exist_ok=True)\r\n\r\n\t\t# Update bundle.yaml in BIM3DM.tab folder\r\n\t\tbundleFile = os.path.join(extTabPath, 'bundle.yaml')\r\n\t\tpanelEntry = f\"  - {panelName}\"  # Add two leading spaces\r\n\t\tif not os.path.exists(bundleFile):\r\n\t\t\twith open(bundleFile, 'w') as file:\r\n\t\t\t\tfile.write(f\"{panelEntry}\\n\")\r\n\t\telse:\r\n\t\t\twith open(bundleFile, 'r') as file:\r\n\t\t\t\tcontent = file.readlines()\r\n\t\t\t\r\n\t\t\tif panelEntry not in content:\r\n\t\t\t\tcontent.append(f\"{panelEntry}\\n\")\r\n\t\t\t\r\n\t\t\twith open(bundleFile, 'w') as file:\r\n\t\t\t\tfile.writelines(content)\r\n\r\n\t\t# Handle file operations based on selected file type\r\n\t\tselectedType = self._cbbSourceFile.SelectedItem\r\n\t\tsourceFilePath = self._txtbSourceFilePath.Text  # Get the selected file path from the text box\r\n\r\n\t\tif selectedType == '.py':\r\n\t\t\tpyFilePath = os.path.join(buttonDir, 'script.py')\r\n\t\t\twith open(pyFilePath, 'w') as pyFile:\r\n\t\t\t\tpyFile.write(\"print('Welcome to BIM3DM')\")\r\n\t\telif selectedType == '.dyn':\r\n\t\t\tif os.path.exists(sourceFilePath):\r\n\t\t\t\tdestinationFilePath = os.path.join(buttonDir, os.path.basename(sourceFilePath))\r\n\t\t\t\tshutil.copy2(sourceFilePath, destinationFilePath)\r\n\r\n\t\t\t\t# Copy the original file and rename it to _script.dyn\r\n\t\t\t\tscriptFilePath = os.path.splitext(destinationFilePath)[0] + '_script.dyn'\r\n\t\t\t\tshutil.copy2(sourceFilePath, scriptFilePath)\r\n\t\telif selectedType == '.dll':\r\n\t\t\tif os.path.exists(sourceFilePath):\r\n\t\t\t\tdestinationFilePath = os.path.join(buttonDir, os.path.basename(sourceFilePath))\r\n\t\t\t\tshutil.copy2(sourceFilePath, destinationFilePath)\r\n\r\n\t\t# Copy the selected icon file into the pushbutton directory and rename it to icon.png\r\n\t\ticonFilePath = self._txtbIconPath.Text\r\n\t\tif os.path.exists(iconFilePath):\r\n\t\t\ticonDestPath = os.path.join(buttonDir, 'icon.png')\r\n\t\t\tshutil.copy2(iconFilePath, iconDestPath)\r\n\r\n\t\tself.Close()\r\n\r\n\tdef BtnSelIconClick(self, sender, e):\r\n\t\tdialog = System.Windows.Forms.OpenFileDialog()\r\n\t\tdialog.Filter = \"PNG files (*.png)|*.png|All files (*.*)|*.*\"\r\n\t\tif dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK:\r\n\t\t\tself._txtbIconPath.Text = dialog.FileName\r\nf = MainForm()\r\nApplication.Run(f)\r\n# OUT = f.va",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "52ecc99f0fcf4df4b7dac8ab2cda8832",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "45489c143fe0481aaba7926ef2ea455a",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ac6417427c2544bbbe87e1cee8ed25d4",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "1b6e28837a0949098886ab77fb4c4e92",
+      "End": "30e9b718236d4e718bc23d646021cc48",
+      "Id": "64c7988e745f4917a0399b8980104c95",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b6ff932be7ab484bab2a7fec1f7c1af6",
+      "End": "c98d6834a0284eb0be2c6965c19704f0",
+      "Id": "b5889c30277448918eabc7eb0059fabc",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2cda73a39601442eb3fc8a9be6777d9f",
+      "End": "30df12ee097f44e1a18111db235bb355",
+      "Id": "f2de388b1bad4bada3bc142c23033348",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2cda73a39601442eb3fc8a9be6777d9f",
+      "End": "57d97d6c12c24c4bb2f4aa3a17c8d48c",
+      "Id": "36d2225395d047c1bf1d03fa787d473a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2cda73a39601442eb3fc8a9be6777d9f",
+      "End": "0cca0ef67476409eb25f0632361fc379",
+      "Id": "6497a5add06043b3ac8f116afe470136",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2cda73a39601442eb3fc8a9be6777d9f",
+      "End": "45489c143fe0481aaba7926ef2ea455a",
+      "Id": "a3216bfc5519429abdf0cc2b9f19418d",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.18",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "6.0",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.18.1.5096",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17875.623046875,
+      "EyeY": 33599.931640625,
+      "EyeZ": -28720.22265625,
+      "LookX": 36470.1640625,
+      "LookY": -32813.9921875,
+      "LookZ": 36711.88671875,
+      "UpX": 0.24104699492454529,
+      "UpY": 0.93969202041625977,
+      "UpZ": 0.24264217913150787
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "38ee50de0bc34785a9cdb3712d6591a3",
+        "Name": "v1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "ShowGeometry": true,
+        "X": 6848.2618933730691,
+        "Y": -1099.8464820703912
+      },
+      {
+        "Id": "fa47c1a0c07a4d55b287d6bc8794d070",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "ShowGeometry": false,
+        "X": 7134.5255531728344,
+        "Y": -907.62925988193479
+      },
+      {
+        "Id": "8804d05b3bef4685b318a98347ff5d15",
+        "Name": "Python Script From String",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": false,
+        "X": 7673.6306535033846,
+        "Y": -852.46747417383983
+      },
+      {
+        "Id": "d790d5169b2449d78bcb1b8babc8852a",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": false,
+        "X": 7433.4508003813244,
+        "Y": -974.25379823015874
+      },
+      {
+        "Id": "3e8ff0a9df9d4c5383784732563c0ee1",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": false,
+        "X": 6586.4630164975842,
+        "Y": -1174.812767218931
+      },
+      {
+        "Id": "20021fc049c547cd83276ccf71af82e7",
+        "Name": "Revit Tool Setup V1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "ShowGeometry": true,
+        "X": 7094.99692468585,
+        "Y": -1240.4127501241076
+      },
+      {
+        "Id": "636469aa8bd0444c887b5f01e23c7200",
+        "Name": "v2",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "ShowGeometry": true,
+        "X": 6849.0791077348076,
+        "Y": -911.06788137294166
+      },
+      {
+        "Id": "52ecc99f0fcf4df4b7dac8ab2cda8832",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 6815.8656272245644,
+        "Y": -720.24454399790682
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "18ded8da292c42b6b4812e6b40a8cce3",
+        "Title": "Form",
+        "DescriptionText": "Description <Double click here to edit group description>",
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "38ee50de0bc34785a9cdb3712d6591a3",
+          "3e8ff0a9df9d4c5383784732563c0ee1",
+          "636469aa8bd0444c887b5f01e23c7200"
+        ],
+        "HasNestedGroups": false,
+        "Left": 6576.4630164975842,
+        "Top": -1247.812767218931,
+        "Width": 445.61609123722337,
+        "Height": 498.7448858459893,
+        "FontSize": 36.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": -1174.812767218931,
+        "InitialHeight": 408.7448858459893,
+        "TextblockHeight": 63.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "2baeb8f520294ca8bf00bd03968f0d0c",
+        "Title": "Design Script",
+        "DescriptionText": "",
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "d790d5169b2449d78bcb1b8babc8852a",
+          "8804d05b3bef4685b318a98347ff5d15",
+          "fa47c1a0c07a4d55b287d6bc8794d070"
+        ],
+        "HasNestedGroups": false,
+        "Left": 7124.5255531728344,
+        "Top": -1047.2537982301587,
+        "Width": 826.10510033055016,
+        "Height": 403.7863240563189,
+        "FontSize": 36.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": -974.25379823015874,
+        "InitialHeight": 266.7863240563189,
+        "TextblockHeight": 63.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -6204.4918227277685,
+    "Y": 1070.9166649840586,
+    "Zoom": 1.01863765137098
+  }
+}
