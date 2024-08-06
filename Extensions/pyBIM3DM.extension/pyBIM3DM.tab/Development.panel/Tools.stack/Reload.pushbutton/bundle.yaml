@@ -1,0 +1,14 @@
+tooltip:
+  ru: Searches the script folders and creates buttons for new scripts or newly installed extensions.
+  en_us: Searches the script folders and create buttons for the new script or newly installed extensions.
+  fr_fr: Searches the script folders and creates buttons for new scripts or newly installed extensions.
+engine:
+  clean: true
+title:
+  ru: Reload
+  en_us: "Reload"
+  fa: "Reload"
+  bg: "Reload"
+  nl_nl: "Reload"
+  fr_fr: "Reload"
+context: zero-doc
