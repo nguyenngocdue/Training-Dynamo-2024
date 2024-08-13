@@ -1,0 +1,12 @@
+{
+    "name": "MyCustomNodes",
+    "version": "1.0.0",
+    "description": "A collection of custom nodes for basic mathematical operations and utilities.",
+    "keywords": [
+        "math",
+        "utilities",
+        "custom nodes"
+    ],
+    "author": "Your Name",
+    "license": "MIT"
+}
