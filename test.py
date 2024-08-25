@@ -1,17 +1,10 @@
-_dict = {
-    'type_name' : 'Structural Framing',
-    'dimension' : '200x300',
-    'volume': 0.6
-    'mark' : 'D1'
-}
+import sys
+sys.path.append('/mnt/u/17_TrainingAdvanceDynamo/2_WORKING/Tool/Dynamo/Training-Dynamo-2024/Libraries/Bim3dm')
 
-_list = [1,2,3,4,5]
-    #   0  1  2 3 4 5
 
-# CREATE READ UPDATE
-#int CREATE READ UPDATE -> LOOP, IF ELSE ELIF, TRY EXCEPT , DEF, CLASS
-#str CREATE READ UPDATE 
-#list CREATE READ UPDATE 
-#dict CREATE READ UPDATE 
-#set CREATE READ UPDATE 
-#tuple CREATE READ UPDATE 
+from pyBIM3DMlab import generateArray
+
+temp = generateArray()
+print(temp)
+
+

@@ -1,0 +1,497 @@
+{
+  "Uuid": "6e74e52f-cde7-4813-b173-4ed074846cd4",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "PointTranslation",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Autodesk.Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Autodesk.DesignScript.Geometry.Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NumberType": "Double",
+      "MaximumValue": 10.0,
+      "MinimumValue": -10.0,
+      "StepValue": 1.0,
+      "Id": "a894233a0316471397b0994f51d75fc0",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "24fe073acf7e488a9ea79285a892a4dd",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Produces numeric values",
+      "InputValue": 1.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "2d2a4d6ab9a449dfb89c39dc3d2ff954",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f90d1360d9b141e6ac52d75fd72ef01f",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NumberType": "Double",
+      "MaximumValue": 10.0,
+      "MinimumValue": -10.0,
+      "StepValue": 1.0,
+      "Id": "741e360c63064367b955fa5cb2d59006",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4a00ff0f04a24f978facb01a33282357",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Produces numeric values",
+      "InputValue": 6.0
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "re  = open(r\"A:\\Library-Dynamo-Python-CSharp\\test.py\", \"r\")\r\n\r\ninterpret = re.read()\r\n\r\nOUT =  interpret",
+      "Engine": "IronPython2",
+      "EngineName": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "8a075e6538694866a4b6ba20c89ac762",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "60355c270c3649f5abbc8509c15afd3e",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d23a00b0fdd340d5839a941cec528dd3",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NumberType": "Double",
+      "MaximumValue": 10.0,
+      "MinimumValue": -10.0,
+      "StepValue": 1.0,
+      "Id": "c02430e257704d46b76d0db8ba42aa86",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1fa1fe5ed2e6475db155ac848924227c",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Produces numeric values",
+      "InputValue": -2.0
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonStringNode, PythonNodeModels",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "167c7ad7da784955824414fbc3ff0b62",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "0eeaf1e12f754c1ebf93336bd43b962b",
+          "Name": "script",
+          "Description": "Python script to run.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "82104ef157ba46eea09b64d7823d0390",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f78ba6d653274e40a43428be03642118",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "65fe51730272401783ca29ab0d49c963",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f2c17eb07784491195e7b19b76f95d01",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f759befe507b4004801c93eabcc6f973",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs a Python script from a string."
+    },
+    {
+      "ConcreteType": "Dynamo.Nodes.SelectEdges, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "ee06cab4-e55e-4d94-a01d-2d1a1fc5cf13-001b37ce:0:INSTANCE:ee06cab4-e55e-4d94-a01d-2d1a1fc5cf13-001b37d2:29:LINEAR",
+        "ee06cab4-e55e-4d94-a01d-2d1a1fc5cf13-001b37ce:0:INSTANCE:ee06cab4-e55e-4d94-a01d-2d1a1fc5cf13-001b37d2:32:LINEAR",
+        "ee06cab4-e55e-4d94-a01d-2d1a1fc5cf13-001b37ce:0:INSTANCE:ee06cab4-e55e-4d94-a01d-2d1a1fc5cf13-001b37d2:33:LINEAR"
+      ],
+      "Id": "06db0405b8734c9ca6abfad5e4d6a9d2",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "20a53194ba124392a07a3cf53c5f91c6",
+          "Name": "Curves",
+          "Description": "The selected elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select multiple edges."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "import clr \r\nimport System\r\nimport math \r\nfrom System.Collections.Generic import *\r\n\r\n\r\nclr.AddReference('RevitAPI')\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import*\r\nfrom  Autodesk.Revit.UI.Selection import*\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"ProtoGeometry\")\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n#########################################################################\r\ndef moveLinesByVector(lines, vector):\r\n    newLines = []\r\n    for line in lines:\r\n        newStartPoint = line.StartPoint.Add(vector)\r\n        newEndPoint = line.EndPoint.Add(vector)\r\n        newLine = Line.ByStartPointEndPoint(newStartPoint, newEndPoint)\r\n        newLines.append(newLine)\r\n    return newLines\r\n\r\n\r\n\r\nelements = [UnwrapElement(IN[0])] if not isinstance(IN[0], list) else UnwrapElement(IN[0])\r\nxTranslation = IN[1]\r\nyTranslation = IN[2]\r\nzTranslation = IN[3]\r\nvector = Vector.ByCoordinates(xTranslation, yTranslation, zTranslation)\r\nOUT = moveLinesByVector(elements, vector)\r\n\r\n\r\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "b7258519f3684fd99c2b87f448dc7059",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "5b94d71a0c96477c9bc53c04e92fa746",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "49f163305f724e839b6c262364a9ad41",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8d4cd357730c45bf89bddcae9cee258b",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3d47b1215a5445a7b6260f44fdcb2ae7",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "176683b8c2324d79bd9c5df075c92fbb",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "24fe073acf7e488a9ea79285a892a4dd",
+      "End": "49f163305f724e839b6c262364a9ad41",
+      "Id": "d38cdfb944884a168e0233d7f25b84aa",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f90d1360d9b141e6ac52d75fd72ef01f",
+      "End": "60355c270c3649f5abbc8509c15afd3e",
+      "Id": "0da2f23a2c0f45fb9ee791747ce30cbd",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4a00ff0f04a24f978facb01a33282357",
+      "End": "8d4cd357730c45bf89bddcae9cee258b",
+      "Id": "1093e3ed3799458db76ca367efd83c94",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d23a00b0fdd340d5839a941cec528dd3",
+      "End": "0eeaf1e12f754c1ebf93336bd43b962b",
+      "Id": "99030fcaf51b4b7c8bff5299d0e0b664",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1fa1fe5ed2e6475db155ac848924227c",
+      "End": "3d47b1215a5445a7b6260f44fdcb2ae7",
+      "Id": "1f6694b69e8a4c3c9f435a888ab65689",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "20a53194ba124392a07a3cf53c5f91c6",
+      "End": "5b94d71a0c96477c9bc53c04e92fa746",
+      "Id": "831f4320af8d4c718ae7fcd0ce3aa61a",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.18",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "6.0",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.18.1.5096",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -5444.38916015625,
+      "EyeY": -5837.12939453125,
+      "EyeZ": -5368.7314453125,
+      "LookX": 1359.94970703125,
+      "LookY": -315.33642578125,
+      "LookZ": -463.2421875,
+      "UpX": 9.3881766360937036E-08,
+      "UpY": 1.0,
+      "UpZ": -5.582283506555541E-07
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "a894233a0316471397b0994f51d75fc0",
+        "Name": "xTranslation",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 692.44628964635149,
+        "Y": 643.50880814220113
+      },
+      {
+        "Id": "2d2a4d6ab9a449dfb89c39dc3d2ff954",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 728.48049818315974,
+        "Y": 13.947486829447598
+      },
+      {
+        "Id": "741e360c63064367b955fa5cb2d59006",
+        "Name": "yTranslation",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 698.21945575582947,
+        "Y": 794.34006350966706
+      },
+      {
+        "Id": "8a075e6538694866a4b6ba20c89ac762",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 979.18399387103568,
+        "Y": 88.878969990473735
+      },
+      {
+        "Id": "c02430e257704d46b76d0db8ba42aa86",
+        "Name": "zTranslation",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 700.32368473736346,
+        "Y": 936.62061848920416
+      },
+      {
+        "Id": "167c7ad7da784955824414fbc3ff0b62",
+        "Name": "Python Script From String",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1215.0315299320548,
+        "Y": 133.53287195881265
+      },
+      {
+        "Id": "06db0405b8734c9ca6abfad5e4d6a9d2",
+        "Name": "Select Edges",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 707.08423488626158,
+        "Y": 454.60669723988383
+      },
+      {
+        "Id": "b7258519f3684fd99c2b87f448dc7059",
+        "Name": "moveLinesByVector",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1156.3294971856212,
+        "Y": 644.26252582367965
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "4402b8dbb5b7483082696b8051b83bf6",
+        "Title": "VS Code",
+        "DescriptionText": "",
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "8a075e6538694866a4b6ba20c89ac762",
+          "2d2a4d6ab9a449dfb89c39dc3d2ff954",
+          "167c7ad7da784955824414fbc3ff0b62"
+        ],
+        "HasNestedGroups": false,
+        "Left": 718.48049818315974,
+        "Top": -59.0525131705524,
+        "Width": 773.55103174889507,
+        "Height": 459.585385129365,
+        "FontSize": 36.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": 13.947486829447598,
+        "InitialHeight": 264.585385129365,
+        "TextblockHeight": 63.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": 22.95071229390237,
+    "Y": 63.337002486326696,
+    "Zoom": 0.66973279936952468
+  }
+}
